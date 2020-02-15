@@ -1,0 +1,65 @@
+$background_color_1: #f5f5f5;
+$background_color_2: transparent;
+$background_color_3: rgba(2555,255,255,.3);
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 60px;
+  >.container {
+    padding: 60px 15px 0;
+  }
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  background-color: $background_color_1;
+  >.container {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+.container {
+  .text-muted {
+    margin: 20px 0;
+  }
+}
+code {
+  font-size: 80%;
+}
+#loginbox {
+  margin-top: 30px;
+  >div {
+    &:first-child {
+      padding-bottom: 10px;
+    }
+  }
+}
+#form {
+  >div {
+    margin-bottom: 25px;
+    &:last-child {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+  }
+}
+.panel {
+  background-color: $background_color_2;
+}
+.panel-body {
+  padding-top: 30px;
+  background-color: $background_color_3;
+}
+.animated-class{
+  &.ng-enter {
+    @include bounceInLeft( $duration: 0.8s, $delay: 0s);
+  }
+  &.ng-leave {
+    @include bounceOutRight( $duration: 0.0001s);
+  }
+}

@@ -1,0 +1,23 @@
+<h2>Hi, {{loggedUser}}!</h2>
+
+<div ng-show="usersLength > 0">
+	<h3>There are {{usersLength}} registered users.</h3>
+	<table ng-table="tableParams"  class="table table-bordered table-striped" >
+		<thead>
+			<tr>
+				<th>Full name</th>
+				<th>Username</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="user in $data">
+				<td>
+					{{user.name}}
+				</td>
+				<td>
+					{{user.username}}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
