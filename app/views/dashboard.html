@@ -2,21 +2,23 @@
 
 <div ng-show="usersLength > 0">
 	<h3>There are {{usersLength}} registered users.</h3>
-	<table ng-table="tableParams"  class="table table-bordered table-striped" >
+	<table ng-table="tableParams" class="table table-bordered table-striped" >
 		<thead>
 			<tr>
-				<th>Full name</th>
 				<th>Username</th>
+				<th>Full name</th>
+				<th>Email</th>
+				<th>Status</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="user in $data">
 				<td>
-					{{user.name}}
-				</td>
-				<td>
 					{{user.username}}
 				</td>
+				<td ng-bind="(user.userAttributes | filter:{name:'fullName'})[0].data"></td>
+				<td ng-bind="(user.userAttributes | filter:{name:'email'})[0].data"></td>
+				<td><input type="checkbox" checked data-toggle="toggle"></td>
 			</tr>
 		</tbody>
 	</table>

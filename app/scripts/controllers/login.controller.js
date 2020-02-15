@@ -4,7 +4,7 @@ app.controller('LoginController', function($scope, LoginService, $rootScope, $co
     $scope.registerUnavailable = false;
     $scope.loginForm = true;
     $scope.user = {
-        userAttributes: [{'name': 'fullname', 'data': ''}],
+        userAttributes: [{'name': 'fullname', 'data': ''}, {'name': 'email', 'data': ''}],
         username: '',
         password: ''
     }

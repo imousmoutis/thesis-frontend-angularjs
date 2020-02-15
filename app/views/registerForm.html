@@ -7,15 +7,21 @@
     <form ng-submit="register()" name="form" id="form" class="form-horizontal">
 
         <div class="input-group" style="margin-top: 2px;">
-            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i></span>
-            <input id="name" type="text" class="form-control" name="user" value="" placeholder="Full name"
+            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-info-sign"></i></span>
+            <input id="name" type="text" class="form-control" name="fullname" value="" placeholder="Full name"
             aria-describedby="basic-addon1" ng-model="user.userAttributes[0].data" required>
         </div>
 
         <div class="input-group" style="margin-top: 2px;">
             <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i></span>
-            <input id="user" type="text" class="form-control" name="user" value="" placeholder="Username"
+            <input id="user" type="text" class="form-control" name="username" value="" placeholder="Username"
             aria-describedby="basic-addon1" ng-model="user.username" required>
+        </div>
+
+        <div class="input-group" style="margin-top: 2px;">
+            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+            <input id="name" type="text" class="form-control" name="email" value="" placeholder="Email"
+            aria-describedby="basic-addon1" ng-model="user.userAttributes[1].data" required>
         </div>
 
         <div class="input-group" style="margin-top: 2px;">
@@ -28,9 +34,9 @@
 
         <div class="form-group">
             <div class="col-sm-12">
-                <button type="button" class="btn btn-default" ng-click="toggleLoginForm()">Already registered? Login!</button>
+                <button type="button" class="btn btn-default" ng-click="toggleLoginForm()"><i class="glyphicon glyphicon-log-in"></i> Already registered? Login.</button>
 
-                <button type="submit" href="#" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-log-in"></i> Register</button>
+                <button type="submit" href="#" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-book"></i> Register!</button>
             </div>
         </div>
 
