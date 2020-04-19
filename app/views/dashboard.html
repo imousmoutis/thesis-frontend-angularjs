@@ -1,25 +1,23 @@
 <h2>Hi, {{loggedUser}}!</h2>
 
 <div ng-show="usersLength > 0">
-	<h3>There are {{usersLength}} registered users.</h3>
-	<table ng-table="tableParams" class="table table-bordered table-striped" >
-		<thead>
-			<tr>
-				<th>Username</th>
-				<th>Full name</th>
-				<th>Email</th>
-				<th>Status</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="user in $data">
-				<td>
-					{{user.username}}
-				</td>
-				<td ng-bind="(user.userAttributes | filter:{name:'fullName'})[0].data"></td>
-				<td ng-bind="(user.userAttributes | filter:{name:'email'})[0].data"></td>
-				<td><input type="checkbox" checked data-toggle="toggle"></td>
-			</tr>
-		</tbody>
-	</table>
+  <h3>There are {{usersLength}} registered users.</h3>
+  <table ng-table="tableParams" class="table table-bordered table-striped">
+    <tr ng-repeat="user in $data">
+      <td data-title="'Username'" data-sortable="'username'">
+        {{user.username}}
+      </td>
+      <td data-title="'Full Name'"
+          ng-bind="(user.userAttributes | filter:{name:'fullName'})[0].data"></td>
+      <td data-title="'Email'" ng-bind="(user.userAttributes | filter:{name:'email'})[0].data"></td>
+      <td data-title="'Status'" data-sortable="'status'">
+        <input ng-init="statusToggle=(user.status == 1)" ng-model="statusToggle" name="statusToggle" type="checkbox"
+               is-disabled="true" on-type="info"
+               toggle-btn>
+      </td>
+      <td data-title="'Actions'">
+        hey
+      </td>
+    </tr>
+  </table>
 </div>

@@ -1,8 +1,8 @@
-app.factory('HomeService', function($http, CONSTANTS) {
+app.factory('HomeService', function ($http, CONSTANTS) {
 
-	return {
-		getServerStatus: function() {
-			return $http.get(CONSTANTS.BASE);
-		}
-	};
+  return {
+    getServerStatus: function () {
+      return $http.get(CONSTANTS.BASE);
+    }
+  };
 });

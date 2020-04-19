@@ -37,7 +37,7 @@ function html(done){
 function scss(done){
 	return gulp.src('./app/styles/main.scss')
   .pipe(sass({
-   includePaths: ['./node_modules/bootstrap-sass/' + 'assets/stylesheets', './node_modules/animatewithsass/']
+   includePaths: ['./node_modules/bootstrap-sass/' + 'assets/stylesheets', './node_modules/animatewithsass/', ]
  }))
   .pipe(minify())
   .pipe(rename({
@@ -72,7 +72,7 @@ function watch(){
 	gulp.watch(files.index, gulp.series(index, browserReload));
 	gulp.watch(files.html, gulp.series(html, browserReload));
   gulp.watch(files.scss, gulp.series(scss, browserReload)); 
-  gulp.watch(files.js,gulp.series(js, browserReload));    
+  gulp.watch(files.js, gulp.series(js, browserReload));    
 }
 
 function browser(done) {

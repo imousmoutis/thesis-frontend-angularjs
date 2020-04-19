@@ -1,65 +1,307 @@
 $background_color_1: #f5f5f5;
 $background_color_2: transparent;
-$background_color_3: rgba(2555,255,255,.3);
+$background_color_3: rgba(2555, 255, 255, .3);
 
 html {
   position: relative;
   min-height: 100%;
 }
+
 body {
   margin-bottom: 60px;
-  >.container {
+
+  > .container {
     padding: 60px 15px 0;
   }
 }
+
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 60px;
   background-color: $background_color_1;
-  >.container {
+
+  > .container {
     padding-right: 15px;
     padding-left: 15px;
   }
 }
+
 .container {
   .text-muted {
     margin: 20px 0;
   }
 }
+
 code {
   font-size: 80%;
 }
+
 #loginbox {
   margin-top: 30px;
-  >div {
+
+  > div {
     &:first-child {
       padding-bottom: 10px;
     }
   }
 }
+
 #form {
-  >div {
+  > div {
     margin-bottom: 25px;
+
     &:last-child {
       margin-top: 10px;
       margin-bottom: 10px;
     }
   }
 }
+
 .panel {
   background-color: $background_color_2;
 }
+
 .panel-body {
   padding-top: 30px;
   background-color: $background_color_3;
 }
-.animated-class{
+
+.animated-class {
   &.ng-enter {
-    @include bounceInLeft( $duration: 0.8s, $delay: 0s);
+    @include bounceInLeft($duration: 0.8s, $delay: 0s);
   }
+
   &.ng-leave {
-    @include bounceOutRight( $duration: 0.0001s);
+    @include bounceOutRight($duration: 0.0001s);
   }
+}
+
+.ng-table th {
+  text-align: center;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.ng-table th.sortable {
+  cursor: pointer;
+}
+
+.ng-table th.sortable .sort-indicator {
+  padding-right: 18px;
+  position: relative;
+}
+
+.ng-table th.sortable .sort-indicator:after,
+.ng-table th.sortable .sort-indicator:before {
+  content: "";
+  border-width: 0 4px 4px;
+  border-style: solid;
+  border-color: #000 transparent;
+  visibility: visible;
+  right: 5px;
+  top: 50%;
+  position: absolute;
+  opacity: .3;
+  margin-top: -4px;
+}
+
+.ng-table th.sortable .sort-indicator:before {
+  margin-top: 2px;
+  border-bottom: none;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #000;
+}
+
+.ng-table th.sortable .sort-indicator:hover:after,
+.ng-table th.sortable .sort-indicator:hover:before {
+  opacity: 1;
+  visibility: visible;
+}
+
+.ng-table th.sortable.sort-desc,
+.ng-table th.sortable.sort-asc {
+  background-color: rgba(141, 192, 219, 0.25);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+}
+
+.ng-table th.sortable.sort-desc .sort-indicator:after,
+.ng-table th.sortable.sort-asc .sort-indicator:after {
+  margin-top: -2px;
+}
+
+.ng-table th.sortable.sort-desc .sort-indicator:before,
+.ng-table th.sortable.sort-asc .sort-indicator:before {
+  visibility: hidden;
+}
+
+.ng-table th.sortable.sort-asc .sort-indicator:after,
+.ng-table th.sortable.sort-asc .sort-indicator:hover:after {
+  visibility: visible;
+  filter: alpha(opacity=60);
+  -khtml-opacity: 0.6;
+  -moz-opacity: 0.6;
+  opacity: 0.6;
+}
+
+.ng-table th.sortable.sort-desc .sort-indicator:after {
+  border-bottom: none;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #000;
+  visibility: visible;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  filter: alpha(opacity=60);
+  -khtml-opacity: 0.6;
+  -moz-opacity: 0.6;
+  opacity: 0.6;
+}
+
+.ng-table th.filter .input-filter {
+  margin: 0;
+  display: block;
+  width: 100%;
+  min-height: 30px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.ng-table + .pagination {
+  margin-top: 0;
+}
+
+@media only screen and (max-width: 800px) {
+  .ng-table-responsive {
+    border-bottom: 1px solid #999999;
+  }
+  .ng-table-responsive tr {
+    border-top: 1px solid #999999;
+    border-left: 1px solid #999999;
+    border-right: 1px solid #999999;
+  }
+  .ng-table-responsive td:before {
+    position: absolute;
+    padding: 8px;
+    left: 0;
+    top: 0;
+    width: 50%;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+  }
+  .ng-table-responsive thead tr th {
+    text-align: left;
+  }
+  .ng-table-responsive thead tr.ng-table-filters th {
+    padding: 0;
+  }
+  .ng-table-responsive thead tr.ng-table-filters th form > div {
+    padding: 8px;
+  }
+  .ng-table-responsive td {
+    border: none;
+    border-bottom: 1px solid #eeeeee;
+    position: relative;
+    padding-left: 50%;
+    white-space: normal;
+    text-align: left;
+  }
+  .ng-table-responsive td:before {
+    content: attr(data-title-text);
+  }
+  .ng-table-responsive,
+  .ng-table-responsive thead,
+  .ng-table-responsive tbody,
+  .ng-table-responsive th,
+  .ng-table-responsive td,
+  .ng-table-responsive tr {
+    display: block;
+  }
+}
+
+.toggle-switch input {
+  position: absolute;
+  z-index: 1;
+  width: 46px;
+  margin: 0 0 0 -4px;
+  height: 24px;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  cursor: pointer;
+}
+
+@media (min-width: 1200px) {
+  .toggle-switch .toggle-knob {
+    height: 11px;
+    width: 33px;
+  }
+}
+
+.toggle-switch .on-label:before, .toggle-switch .off-label:after {
+  content: "\00a0";
+}
+
+.toggle-switch .toggle-knob {
+  display: inline-block;
+  position: relative;
+  width: 35px;
+  height: 12px;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.26);
+  -webkit-transition: background .28s cubic-bezier(0.4,0,0.2,1);
+  transition: background .28s cubic-bezier(0.4,0,0.2,1);
+  vertical-align: middle;
+  cursor: pointer;
+  margin-top: 6px !important;
+  cursor: inherit;
+}
+
+@media (min-width: 1200px) {
+  .toggle-switch input:checked + .toggle-knob:before {
+    left: 18px;
+    background: #fff;
+  }
+}
+
+@media (min-width: 1200px) {
+  .toggle-switch .toggle-knob:before {
+    width: 20px;
+    height: 20px;
+    top: -5px;
+  }
+}
+
+.toggle-switch .toggle-knob:before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 20px;
+  height: 20px;
+  background: #fafafa;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.28);
+  border-radius: 50%;
+  webkit-transition: left .28s cubic-bezier(0.4,0,0.2,1),background .28s cubic-bezier(0.4,0,0.2,1),box-shadow .28s cubic-bezier(0.4,0,0.2,1);
+  transition: left .28s cubic-bezier(0.4,0,0.2,1),background .28s cubic-bezier(0.4,0,0.2,1),box-shadow .28s cubic-bezier(0.4,0,0.2,1);
+}
+
+.toggle-switch input:checked + .toggle-knob:before {
+  left: 20px;
+}
+
+.toggle-switch.oninfo input:checked + .toggle-knob, .toggle-switch.offinfo input:not(:checked) + .toggle-knob {
+  background: rgba(24, 194, 241, 0.50);
+}
+
+.toggle-switch.oninfo input:checked + .toggle-knob:before, .toggle-switch.offinfo input:not(:checked) + .toggle-knob:before {
+  background: #18C2F1;
 }
