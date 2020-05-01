@@ -1,5 +1,5 @@
 app.controller('DashboardController',
-    function ($scope, $rootScope, DashboardService, CONSTANTS, $location, ngTableParams) {
+    function ($scope, $rootScope, DashboardService, CONSTANTS, $location, ngTableParams, $uibModal, Notification) {
 
       if ($rootScope.loggedUserRole === CONSTANTS.USER_ADMIN) {
         $scope.users = [];
@@ -11,8 +11,6 @@ app.controller('DashboardController',
           getUsers();
         });
       }
-
-      $scope.status = true;
 
       function getUsers() {
         $scope.tableParams = new ngTableParams({
@@ -39,4 +37,51 @@ app.controller('DashboardController',
           }
         });
       }
+
+      $scope.editUser = function (user, index) {
+        var modalInstance = $uibModal.open({
+          animation: true,
+          templateUrl: 'html/editUser.html',
+          controller: EditUserController,
+          scope: $scope.$new(),
+          resolve: {
+            user: function () {
+              return user;
+            }
+          }
+        });
+
+        modalInstance.result
+        .then(function (updatedUser) {
+          if (updatedUser) {
+            $scope.users[index] = updatedUser;
+            $scope.tableParams.reload();
+          }
+        });
+      };
+
+      var EditUserController = function (user, $uibModalInstance) {
+        $scope.userInstance = angular.copy(user);
+        $scope.userInstanceStatus = (user.status === 1);
+
+        $scope.cancel = function () {
+          $uibModalInstance.close();
+        };
+
+        $scope.changeStatus = function () {
+          $scope.userInstanceStatus = !$scope.userInstanceStatus;
+        };
+
+        $scope.save = function () {
+          $scope.userInstance.status = $scope.userInstanceStatus ? 1 : 0;
+          DashboardService.saveUser($scope.userInstance)
+          .then(function (response) {
+            Notification.success({message: 'User successfully saved.', positionY: 'top', positionX: 'right'});
+            $uibModalInstance.close($scope.userInstance);
+          }, function (error) {
+            Notification.error({message: 'An error occurred while saving the user.', positionY: 'top', positionX: 'right'});
+          });
+
+        }
+      };
     });

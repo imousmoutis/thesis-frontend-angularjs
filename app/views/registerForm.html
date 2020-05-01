@@ -1,45 +1,49 @@
 <div class="panel-heading">
-    <div class="panel-title text-center">Register</div>
+  <div class="panel-title text-center">Register</div>
 </div>
 
 <div class="panel-body">
 
-    <form ng-submit="register()" name="registerForm" id="form" class="form-horizontal">
+  <form class="form-horizontal" id="form" name="registerForm" ng-submit="register()">
 
-        <div class="input-group" style="margin-top: 2px;">
-            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-info-sign"></i></span>
-            <input id="name" type="text" class="form-control" name="fullname" value="" placeholder="Full name"
-            aria-describedby="basic-addon1" ng-model="user.fullName">
-        </div>
+    <div class="input-group" style="margin-top: 2px;">
+      <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i></span>
+      <input aria-describedby="basic-addon1" class="form-control" id="user" name="username" ng-model="user.username" placeholder="Username"
+             type="text" value="">
+    </div>
 
-        <div class="input-group" style="margin-top: 2px;">
-            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i></span>
-            <input id="user" type="text" class="form-control" name="username" value="" placeholder="Username"
-            aria-describedby="basic-addon1" ng-model="user.username">
-        </div>
+    <div class="input-group" style="margin-top: 2px;">
+      <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-info-sign"></i></span>
+      <input aria-describedby="basic-addon1" class="form-control" id="name" name="fullname" ng-model="user.fullName" placeholder="Full name"
+             type="text" value="">
+    </div>
 
-        <div class="input-group" style="margin-top: 2px;">
-            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
-            <input id="name" type="text" class="form-control" name="email" value="" placeholder="Email"
-            aria-describedby="basic-addon1" ng-model="user.email">
-        </div>
+    <div class="input-group" style="margin-top: 2px;">
+      <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+      <input aria-describedby="basic-addon1" class="form-control" id="email" name="email" ng-model="user.email" placeholder="Email"
+             type="text" value="">
+    </div>
 
-        <div class="input-group" style="margin-top: 2px;">
-            <span class="input-group-addon" id="basic-addon2"><i class="glyphicon glyphicon-lock"></i></span>
-            <input id="password" type="password" class="form-control" name="password" placeholder="Password"
-            aria-describedby="basic-addon2" ng-model="user.password">
-        </div>
+    <div class="input-group" style="margin-top: 2px;">
+      <span class="input-group-addon" id="basic-addon2"><i class="glyphicon glyphicon-lock"></i></span>
+      <input aria-describedby="basic-addon2" class="form-control" id="password" name="password" ng-model="user.password"
+             placeholder="Password" type="password">
+    </div>
 
-        <div ng-show="registerUnavailable" class="alert alert-danger" role="alert">Please check your information.</div>
+    <div class="form-group">
+      <div class="col-sm-12">
+        <button class="btn btn-default" ng-click="toggleLoginForm()" type="button">
+          <i class="glyphicon glyphicon-log-in"></i>
+          Already registered? Login.
+        </button>
 
-        <div class="form-group">
-            <div class="col-sm-12">
-                <button type="button" class="btn btn-default" ng-click="toggleLoginForm()"><i class="glyphicon glyphicon-log-in"></i> Already registered? Login.</button>
+        <button class="btn btn-primary pull-right" href="#" type="submit">
+          <i class="glyphicon glyphicon-book"></i>
+          Register!
+        </button>
+      </div>
+    </div>
 
-                <button type="submit" href="#" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-book"></i> Register!</button>
-            </div>
-        </div>
-
-    </form>
+  </form>
 
 </div>

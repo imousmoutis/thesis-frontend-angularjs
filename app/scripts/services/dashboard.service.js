@@ -11,6 +11,11 @@ app.factory('DashboardService', function ($http, CONSTANTS, $cookies) {
         headers: {'Authorization': $cookies.get('jwt')},
         params: params
       });
+    },
+    saveUser: function (user) {
+      return $http.post(CONSTANTS.BASE + 'user', user, {
+        headers: {'Authorization': $cookies.get('jwt')}
+      });
     }
   };
 });

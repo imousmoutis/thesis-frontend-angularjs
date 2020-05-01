@@ -2,21 +2,23 @@
 
 <div ng-show="usersLength > 0">
   <h3>There are {{usersLength}} registered users.</h3>
-  <table ng-table="tableParams" class="table table-bordered table-striped">
+  <table class="table table-bordered table-striped" ng-table="tableParams">
     <tr ng-repeat="user in $data">
-      <td data-title="'Username'" data-sortable="'username'">
+      <td data-sortable="'username'" data-title="'Username'">
         {{user.username}}
       </td>
       <td data-title="'Full Name'"
           ng-bind="(user.userAttributes | filter:{name:'fullName'})[0].data"></td>
       <td data-title="'Email'" ng-bind="(user.userAttributes | filter:{name:'email'})[0].data"></td>
-      <td data-title="'Status'" data-sortable="'status'">
-        <input ng-init="statusToggle=(user.status == 1)" ng-model="statusToggle" name="statusToggle" type="checkbox"
-               is-disabled="true" on-type="info"
-               toggle-btn>
+      <td data-sortable="'status'" data-title="'Status'">
+        <input is-disabled="true" name="statusToggle" ng-init="statusToggle=(user.status == 1)" ng-model="statusToggle"
+               on-type="info" toggle-btn
+               type="checkbox">
       </td>
       <td data-title="'Actions'">
-        hey
+        <button aria-label="Left Align" class="btn btn-default btn-sm" ng-click="editUser(user, $index)" type="button">
+          <span aria-hidden="true" class="glyphicon glyphicon-pencil"></span>
+        </button>
       </td>
     </tr>
   </table>

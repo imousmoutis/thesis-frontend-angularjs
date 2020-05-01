@@ -1,21 +1,30 @@
 <nav class="navbar navbar-default navbar-fixed-top" data-ng-controller="AppController">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">My App</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li ng-class="{'active': activePage == 1}"><a href="#/">Home</a></li>
-                <li ng-class="{'active': activePage == 2}" ng-if="!userIsLogged"><a href="#/login">Login</a></li>
-                <li ng-class="{'active': activePage == 3}" ng-if="userIsLogged"><a href="#/dashboard">Dashboard</a></li>
-                <li ng-if="userIsLogged"><a style="cursor:pointer;" data-ng-click="logout()">Logout</a></li>
-            </ul>
-        </div>
+  <div class="container">
+    <div class="navbar-header">
+      <button aria-controls="navbar" aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar"
+              data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">My App</a>
     </div>
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="nav navbar-nav">
+        <li ng-class="{'active': activePage == 1}">
+          <a href="#/">Home</a>
+        </li>
+        <li ng-class="{'active': activePage == 2}" ng-if="!userIsLogged">
+          <a href="#/login">Login</a>
+        </li>
+        <li ng-class="{'active': activePage == 3}" ng-if="userIsLogged">
+          <a href="#/dashboard">Dashboard</a>
+        </li>
+        <li ng-if="userIsLogged">
+          <a data-ng-click="logout()" style="cursor:pointer;">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>

@@ -1,5 +1,5 @@
 var app = angular.module('ThesisApp',
-    ['ngRoute', 'ngCookies', 'ngAnimate', 'ngTable', 'angular-jwt', 'FormValidation', 'ng-toggle.btn']);
+    ['ngRoute', 'ngCookies', 'ngAnimate', 'ngTable', 'angular-jwt', 'ui.bootstrap', 'FormValidation', 'ng-toggle.btn', 'ui-notification']);
 
 app.constant('CONSTANTS', {
   BASE: 'http://localhost:8080/thesis/api/',
@@ -113,7 +113,7 @@ function FormValidationService() {
 };
 
 angular.module('ng-toggle.btn', [])
-.directive('toggleBtn',[function () {
+.directive('toggleBtn', [function () {
   return {
     restrict: 'EA',
     replace: true,
@@ -128,14 +128,16 @@ angular.module('ng-toggle.btn', [])
       onLabel: '@',
       offLabel: '@',
       required: '@',
-      ngTrueValue:'@',
-      ngFalseValue:'@'
+      ngTrueValue: '@',
+      ngFalseValue: '@'
     },
     template:
         ' <div class="toggle-switch" ng-class="\'on\'+onType+ \' \' + \'off\'+offType"> ' +
         '		<span ng-if="offLabel" class="off-label" ng-bind="offLabel"></span> ' +
-        ' 	<input ng-model="ngModel" id="{{name}}" name="{{name}}" type="checkbox" selected="ngModel" ng-disabled="isDisabled" ng-change="ngChange()" ' +
-        '			hidden="" ng-true-value="{{ngTrueValue? ngTrueValue:true}}" ng-false-value="{{ngFalseValue? ngFalseValue:false}}" ng-required="required"><label for="{{name}}" ' +
+        ' 	<input ng-model="ngModel" id="{{name}}" name="{{name}}" type="checkbox" selected="ngModel" ng-disabled="isDisabled" ng-change="ngChange()" '
+        +
+        '			hidden="" ng-true-value="{{ngTrueValue? ngTrueValue:true}}" ng-false-value="{{ngFalseValue? ngFalseValue:false}}" ng-required="required"><label for="{{name}}" '
+        +
         '			class="toggle-knob"></label> ' +
         '		<span ng-if="onLabel" class="on-label" ng-bind="onLabel"></span> ' +
         '	</div> '
