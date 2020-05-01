@@ -1,16 +1,15 @@
 app.controller('LoginController',
     function ($scope, LoginService, $rootScope, $cookies, $location, jwtHelper, FormValidation, Notification) {
 
+      $scope.forms = {};
       $scope.loginUnavailable = false;
       $scope.registerUnavailable = false;
       $scope.loginForm = true;
       $scope.user = {
         username: '',
         password: '',
-        userAttributes: [
-          {name: 'fullName', data: ''},
-          {name: 'email', data: ''}
-        ]
+        fullName: '',
+        email: ''
       };
 
       $scope.toggleLoginForm = function () {
@@ -45,11 +44,7 @@ app.controller('LoginController',
           $scope.login();
         }, function (error) {
           Notification.error({message: 'An error occurred while registering.', positionY: 'top', positionX: 'right'});
-          validateForm(error);
+          FormValidation.renderFormErrors($scope, $scope.forms.registerForm, error.data.errors);
         });
       };
-
-      function validateForm(error) {
-        FormValidation.renderErrors($scope, $scope.registerForm, error.data.errors);
-      }
     });

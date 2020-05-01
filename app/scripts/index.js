@@ -1,5 +1,6 @@
 var app = angular.module('ThesisApp',
-    ['ngRoute', 'ngCookies', 'ngAnimate', 'ngTable', 'angular-jwt', 'ui.bootstrap', 'FormValidation', 'ng-toggle.btn', 'ui-notification']);
+    ['ngRoute', 'ngCookies', 'ngAnimate', 'ngTable', 'angular-jwt', 'ui.bootstrap', 'FormValidation', 'ng-toggle.btn',
+      'ui-notification']);
 
 app.constant('CONSTANTS', {
   BASE: 'http://localhost:8080/thesis/api/',
@@ -106,11 +107,19 @@ angular.module('FormValidation', []).provider('FormValidation', function () {
 });
 
 function FormValidationService() {
-  this.renderErrors = function ($scope, form, errors) {
-    console.log(form);
-    console.log(errors);
+  this.renderFormErrors = function ($scope, form, errors) {
+    var formControlNames = Object.keys(form).filter(function (key) {
+      return key.indexOf('$') !== 0;
+    });
+    angular.forEach(formControlNames, (function (formControlName) {
+      form[formControlName].$setValidity('invalid', true);
+    }));
+
+    angular.forEach(errors, (function (error) {
+      form[error.field].$setValidity('invalid', false);
+    }));
   }
-};
+}
 
 angular.module('ng-toggle.btn', [])
 .directive('toggleBtn', [function () {
@@ -143,3 +152,13 @@ angular.module('ng-toggle.btn', [])
         '	</div> '
   };
 }]);
+
+$(document).ready(function(){
+  $('[data-toggle=tooltip]').hover(function(){
+    // on mouseenter
+    $(this).tooltip('show');
+  }, function(){
+    // on mouseleave
+    $(this).tooltip('hide');
+  });
+});

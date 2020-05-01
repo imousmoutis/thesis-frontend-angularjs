@@ -305,3 +305,9 @@ code {
 .toggle-switch.oninfo input:checked + .toggle-knob:before, .toggle-switch.offinfo input:not(:checked) + .toggle-knob:before {
   background: #18C2F1;
 }
+
+form > .input-group {
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  margin-top: 2px;
+}
