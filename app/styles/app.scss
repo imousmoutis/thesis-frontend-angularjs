@@ -1,4 +1,4 @@
-$background_color_1: #f5f5f5;
+$background_color_1: #2270bd;
 $background_color_2: transparent;
 $background_color_3: rgba(2555, 255, 255, .3);
 
@@ -8,29 +8,80 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  margin-bottom: 80px;
+  font-family: system-ui;
 
   > .container {
-    padding: 60px 15px 0;
+    padding: 80px 15px 0;
   }
+}
+
+.navbar {
+  min-height: 60px;
+  background-color: $background_color_1;
+  border-width: 0;
+}
+
+.navbar-brand {
+  padding: 0 15px;
+  height: 60px;
+  line-height: 60px;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: white;
+}
+
+.navbar-toggle {
+  /* (80px - button height 34px) / 2 = 23px */
+  margin-top: 13px;
+  padding: 9px 10px !important;
+}
+
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+  background-color: #ffffff40;
+}
+
+@media (min-width: 768px) {
+  .navbar-nav > li > a {
+    /* (80px - line-height of 27px) / 2 = 26.5px */
+    padding-top: 16.5px;
+    padding-bottom: 16.5px;
+    line-height: 27px;
+  }
+}
+
+.navbar-li > a, .navbar-header > a {
+  color: white !important;
+  background-color: transparent !important;
+  font-weight: 600 !important;
+}
+
+.active > a {
+  color: yellow !important;
 }
 
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 60px;
+  height: 40px;
   background-color: $background_color_1;
 
   > .container {
     padding-right: 15px;
     padding-left: 15px;
+    height: inherit;
   }
 }
 
 .container {
   .text-muted {
-    margin: 20px 0;
+    color: white;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+    padding-top: 11px;
   }
 }
 
@@ -256,9 +307,9 @@ code {
   width: 35px;
   height: 12px;
   border-radius: 8px;
-  background: rgba(0,0,0,0.26);
-  -webkit-transition: background .28s cubic-bezier(0.4,0,0.2,1);
-  transition: background .28s cubic-bezier(0.4,0,0.2,1);
+  background: rgba(0, 0, 0, 0.26);
+  -webkit-transition: background .28s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background .28s cubic-bezier(0.4, 0, 0.2, 1);
   vertical-align: middle;
   cursor: pointer;
   margin-top: 6px !important;
@@ -288,10 +339,10 @@ code {
   width: 20px;
   height: 20px;
   background: #fafafa;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.28);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
   border-radius: 50%;
-  webkit-transition: left .28s cubic-bezier(0.4,0,0.2,1),background .28s cubic-bezier(0.4,0,0.2,1),box-shadow .28s cubic-bezier(0.4,0,0.2,1);
-  transition: left .28s cubic-bezier(0.4,0,0.2,1),background .28s cubic-bezier(0.4,0,0.2,1),box-shadow .28s cubic-bezier(0.4,0,0.2,1);
+  webkit-transition: left .28s cubic-bezier(0.4, 0, 0.2, 1), background .28s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .28s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: left .28s cubic-bezier(0.4, 0, 0.2, 1), background .28s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .toggle-switch input:checked + .toggle-knob:before {
@@ -310,4 +361,21 @@ form > .input-group {
   margin-right: 0 !important;
   margin-left: 0 !important;
   margin-top: 2px;
+}
+
+.panel-title {
+  font-weight: bold;
+}
+
+body::-webkit-scrollbar {
+  width: 1em;
+}
+
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
 }

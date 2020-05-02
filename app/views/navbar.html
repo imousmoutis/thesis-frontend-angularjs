@@ -12,16 +12,16 @@
     </div>
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="nav navbar-nav">
-        <li ng-class="{'active': activePage == 1}">
+        <li ng-class="{'active': activePage == 1}" class="navbar-li">
           <a href="#/">Home</a>
         </li>
-        <li ng-class="{'active': activePage == 2}" ng-if="!userIsLogged">
+        <li ng-class="{'active': activePage == 2}" ng-if="!userIsLogged" class="navbar-li">
           <a href="#/login">Login</a>
         </li>
-        <li ng-class="{'active': activePage == 3}" ng-if="userIsLogged">
+        <li ng-class="{'active': activePage == 3}" ng-if="userIsLogged" class="navbar-li">
           <a href="#/dashboard">Dashboard</a>
         </li>
-        <li ng-if="userIsLogged">
+        <li ng-if="userIsLogged" class="navbar-li">
           <a data-ng-click="logout()" style="cursor:pointer;">Logout</a>
         </li>
       </ul>
