@@ -50,7 +50,7 @@
         </button>
 
         <button class="btn btn-primary pull-right"
-
+                ng-disabled="!forms.registerForm['username'].$dirty || !forms.registerForm['username'].$dirty || !forms.registerForm['email'].$dirty || !forms.registerForm['password'].$dirty"
                 type="submit">
           <em class="glyphicon glyphicon-book"></em>
           Register!
