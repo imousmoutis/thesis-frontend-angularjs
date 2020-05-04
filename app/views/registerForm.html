@@ -4,42 +4,56 @@
 
 <div class="panel-body">
 
-  <form class="form-horizontal" id="form" name="forms.registerForm" ng-submit="register()">
+  <form class="form-horizontal" id="form" name="forms.registerForm"
+        ng-submit="forms.registerForm.$valid && register()" novalidate>
 
-    <div class="input-group form-group" ng-class="{'has-error has-feedback': forms.registerForm['username'].$invalid}">
-      <span class="input-group-addon" id="basic-addon1"><em class="glyphicon glyphicon-user"></em></span>
-      <input aria-describedby="basic-addon1" class="form-control" name="username" ng-model="user.username"
-             placeholder="Username" type="text" data-toggle="tooltip"
-             title="{{forms.registerForm['username'].$valid ? '' : 'Error'}}"/>
-      <em ng-show="forms.registerForm['username'].$invalid"
-          class="glyphicon glyphicon-exclamation-sign form-control-feedback"></em>
+    <div>
+      <div class="input-group"
+           ng-class="{'has-error has-feedback': (forms.registerForm.$submitted && forms.registerForm.username.$invalid)}">
+        <span class="input-group-addon" id="basic-addon1"><em class="glyphicon glyphicon-user"></em></span>
+        <input aria-describedby="basic-addon1" class="form-control" name="username" ng-model="user.username"
+               placeholder="Username" required/>
+      </div>
+      <div class="error-message"
+           ng-show="forms.registerForm.$submitted && forms.registerForm.username.$invalid">Username is required.
+      </div>
     </div>
 
-    <div class="input-group form-group" ng-class="{'has-error has-feedback': forms.registerForm['fullName'].$invalid}">
-      <span class="input-group-addon" id="basic-addon2"><em class="glyphicon glyphicon-info-sign"></em></span>
-      <input aria-describedby="basic-addon2" class="form-control" name="fullName" ng-model="user.fullName"
-             placeholder="Full name" type="text" data-toggle="tooltip" data-placement="left"
-             title="{{forms.registerForm['fullName'].$valid ? '' : 'Error'}}"/>
-      <em ng-show="forms.registerForm['fullName'].$invalid"
-          class="glyphicon glyphicon-exclamation-sign form-control-feedback"></em>
+    <div>
+      <div class="input-group"
+           ng-class="{'has-error has-feedback': (forms.registerForm.$submitted && forms.registerForm.fullName.$invalid)}">
+        <span class="input-group-addon" id="basic-addon2"><em class="glyphicon glyphicon-info-sign"></em></span>
+        <input aria-describedby="basic-addon2" class="form-control" name="fullName" ng-model="user.fullName"
+               placeholder="Full name" type="text" required/>
+      </div>
+      <div class="error-message"
+           ng-show="forms.registerForm.$submitted && forms.registerForm.fullName.$invalid">Full name is required.
+      </div>
     </div>
 
-    <div class="input-group form-group" ng-class="{'has-error has-feedback': forms.registerForm['email'].$invalid}">
-      <span class="input-group-addon" id="basic-addon3"><em class="glyphicon glyphicon-envelope"></em></span>
-      <input aria-describedby="basic-addon3" class="form-control" name="email" ng-model="user.email" placeholder="Email"
-             type="text" data-toggle="tooltip" data-placement="left"
-             title="{{forms.registerForm['email'].$valid ? '' : 'Error'}}"/>
-      <em ng-show="forms.registerForm['email'].$invalid"
-          class="glyphicon glyphicon-exclamation-sign form-control-feedback"></em>
+    <div>
+      <div class="input-group"
+           ng-class="{'has-error has-feedback': (forms.registerForm.$submitted && forms.registerForm.email.$invalid)}">
+        <span class="input-group-addon" id="basic-addon3"><em class="glyphicon glyphicon-envelope"></em></span>
+        <input aria-describedby="basic-addon3" class="form-control" name="email" ng-model="user.email"
+               placeholder="Email"
+               type="email" required/>
+      </div>
+      <div class="error-message"
+           ng-show="forms.registerForm.$submitted && forms.registerForm.email.$invalid">Email is required.
+      </div>
     </div>
 
-    <div class="input-group form-group" ng-class="{'has-error has-feedback': forms.registerForm['password'].$invalid}">
-      <span class="input-group-addon" id="basic-addon4"><em class="glyphicon glyphicon-lock"></em></span>
-      <input aria-describedby="basic-addon4" class="form-control" name="password" ng-model="user.password"
-             placeholder="Password" type="password" data-toggle="tooltip" data-placement="left"
-             title="{{forms.registerForm['password'].$valid ? '' : 'Error'}}"/>
-      <em ng-show="forms.registerForm['password'].$invalid"
-          class="glyphicon glyphicon-exclamation-sign form-control-feedback"></em>
+    <div>
+      <div class="input-group"
+           ng-class="{'has-error has-feedback': (forms.registerForm.$submitted && forms.registerForm.password.$invalid)}">
+        <span class="input-group-addon" id="basic-addon4"><em class="glyphicon glyphicon-lock"></em></span>
+        <input aria-describedby="basic-addon4" class="form-control" name="password" ng-model="user.password"
+               placeholder="Password" type="password" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W\_])[A-Za-z\d\W\_]{8,}$"/>
+      </div>
+      <div class="error-message"
+           ng-show="forms.registerForm.$submitted && forms.registerForm.password.$invalid">Password is required.
+      </div>
     </div>
 
     <div class="form-group">
@@ -49,9 +63,7 @@
           Already registered? Login.
         </button>
 
-        <button class="btn btn-primary pull-right"
-                ng-disabled="!forms.registerForm['username'].$dirty || !forms.registerForm['username'].$dirty || !forms.registerForm['email'].$dirty || !forms.registerForm['password'].$dirty"
-                type="submit">
+        <button class="btn btn-primary pull-right" type="submit">
           <em class="glyphicon glyphicon-book"></em>
           Register!
         </button>

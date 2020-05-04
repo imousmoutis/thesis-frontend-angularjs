@@ -4,18 +4,32 @@
 
 <div class="panel-body">
 
-  <form class="form-horizontal" id="form" name="forms.loginForm" ng-submit="login()">
+  <form class="form-horizontal" id="form" name="forms.loginForm" ng-submit="forms.loginForm.$valid && login()"
+        novalidate>
 
-    <div class="input-group">
-      <span class="input-group-addon" id="basic-addon1"><em class="glyphicon glyphicon-user"></em></span>
-      <input aria-describedby="basic-addon1" class="form-control" ng-model="user.username" placeholder="Username"
-             type="text" required/>
+    <div>
+      <div class="input-group"
+           ng-class="{'has-error has-feedback': (forms.loginForm.$submitted && forms.loginForm.username.$invalid)}">
+        <span class="input-group-addon" id="basic-addon1"><em class="glyphicon glyphicon-user"></em></span>
+        <input aria-describedby="basic-addon1" class="form-control" name="username" ng-model="user.username"
+               placeholder="Username"
+               type="text" required/>
+      </div>
+      <div class="error-message"
+           ng-show="forms.loginForm.$submitted && forms.loginForm.username.$invalid">Username is required.
+      </div>
     </div>
 
-    <div class="input-group">
-      <span class="input-group-addon" id="basic-addon2"><em class="glyphicon glyphicon-lock"></em></span>
-      <input aria-describedby="basic-addon2" class="form-control" ng-model="user.password"
-             placeholder="Password" type="password" required/>
+    <div>
+      <div class="input-group"
+           ng-class="{'has-error has-feedback': (forms.loginForm.$submitted && forms.loginForm.password.$invalid)}">
+        <span class="input-group-addon" id="basic-addon2"><em class="glyphicon glyphicon-lock"></em></span>
+        <input aria-describedby="basic-addon2" class="form-control" ng-model="user.password"
+               placeholder="Password" type="password" name="password" required/>
+      </div>
+      <div class="error-message" ng-show="forms.loginForm.$submitted && forms.loginForm.password.$invalid">Password
+        is required.
+      </div>
     </div>
 
     <div class="alert alert-danger" ng-show="loginUnavailable" role="alert">Please check your credentials.</div>
@@ -27,7 +41,7 @@
           New here? Register.
         </button>
 
-        <button class="btn btn-primary pull-right" ng-disabled="forms.loginForm.$invalid" type="submit">
+        <button class="btn btn-primary pull-right" type="submit">
           <em class="glyphicon glyphicon-log-in"></em>
           Log in!
         </button>

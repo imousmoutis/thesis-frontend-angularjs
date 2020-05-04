@@ -1,5 +1,5 @@
 var app = angular.module('ThesisApp',
-    ['ngRoute', 'ngCookies', 'ngAnimate', 'ngTable', 'angular-jwt', 'ui.bootstrap', 'FormValidation', 'ng-toggle.btn',
+    ['ngRoute', 'ngCookies', 'ngAnimate', 'ngTable', 'angular-jwt', 'ui.bootstrap', 'ng-toggle.btn',
       'ui-notification']);
 
 app.constant('CONSTANTS', {
@@ -100,27 +100,6 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
   });
 });
 
-angular.module('FormValidation', []).provider('FormValidation', function () {
-  this.$get = function () {
-    return new FormValidationService();
-  }
-});
-
-function FormValidationService() {
-  this.renderFormErrors = function ($scope, form, errors) {
-    var formControlNames = Object.keys(form).filter(function (key) {
-      return key.indexOf('$') !== 0;
-    });
-    angular.forEach(formControlNames, (function (formControlName) {
-      form[formControlName].$setValidity('invalid', true);
-    }));
-
-    angular.forEach(errors, (function (error) {
-      form[error.field].$setValidity('invalid', false);
-    }));
-  }
-}
-
 angular.module('ng-toggle.btn', [])
 .directive('toggleBtn', [function () {
   return {
@@ -152,13 +131,3 @@ angular.module('ng-toggle.btn', [])
         '	</div> '
   };
 }]);
-
-$(document).ready(function(){
-  $('[data-toggle=tooltip]').hover(function(){
-    // on mouseenter
-    $(this).tooltip('show');
-  }, function(){
-    // on mouseleave
-    $(this).tooltip('hide');
-  });
-});
