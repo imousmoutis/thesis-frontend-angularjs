@@ -1,7 +1,7 @@
-app.controller('HomeController', function ($scope, HomeService) {
+app.controller('HomeController', function ($scope, IndexService) {
   $scope.serverStatus = "Connecting with server...";
 
-  HomeService.getServerStatus()
+  IndexService.getServerStatus()
   .then(function (response) {
     $scope.serverStatus = response.data;
   }, function (error) {

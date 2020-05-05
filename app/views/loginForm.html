@@ -9,25 +9,26 @@
 
     <div>
       <div class="input-group"
-           ng-class="{'has-error has-feedback': (forms.loginForm.$submitted && forms.loginForm.username.$invalid)}">
+           ng-class="{'has-error has-feedback': (forms.loginForm.username.$invalid && (forms.loginForm.username.$dirty || forms.loginForm.username.$touched))}">
         <span class="input-group-addon" id="basic-addon1"><em class="glyphicon glyphicon-user"></em></span>
         <input aria-describedby="basic-addon1" class="form-control" name="username" ng-model="user.username"
                placeholder="Username"
                type="text" required/>
       </div>
       <div class="error-message"
-           ng-show="forms.loginForm.$submitted && forms.loginForm.username.$invalid">Username is required.
+           ng-if="forms.loginForm.username.$invalid && (forms.loginForm.username.$dirty || forms.loginForm.username.$touched)">Username is required.
       </div>
     </div>
 
     <div>
       <div class="input-group"
-           ng-class="{'has-error has-feedback': (forms.loginForm.$submitted && forms.loginForm.password.$invalid)}">
+           ng-class="{'has-error has-feedback': (forms.loginForm.password.$invalid && (forms.loginForm.password.$dirty || forms.loginForm.password.$touched))}">
         <span class="input-group-addon" id="basic-addon2"><em class="glyphicon glyphicon-lock"></em></span>
         <input aria-describedby="basic-addon2" class="form-control" ng-model="user.password"
                placeholder="Password" type="password" name="password" required/>
       </div>
-      <div class="error-message" ng-show="forms.loginForm.$submitted && forms.loginForm.password.$invalid">Password
+      <div class="error-message"
+           ng-if="forms.loginForm.password.$invalid && (forms.loginForm.password.$dirty || forms.loginForm.password.$touched)">Password
         is required.
       </div>
     </div>

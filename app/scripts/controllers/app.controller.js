@@ -1,4 +1,4 @@
-app.controller('AppController', function ($rootScope, $cookies, $location, $scope, jwtHelper) {
+app.controller('AppController', function ($rootScope, $cookies, $location, $scope, jwtHelper, IndexService) {
 
   if ($cookies.get("jwt")) {
     var decodedJwt = jwtHelper.decodeToken($cookies.get("jwt"));
@@ -7,8 +7,11 @@ app.controller('AppController', function ($rootScope, $cookies, $location, $scop
   }
 
   $scope.logout = function () {
-    $cookies.remove("jwt");
-    $rootScope.userIsLogged = false;
-    $location.path("/");
+    IndexService.logout()
+    .then(function (response) {
+      $cookies.remove("jwt");
+      $rootScope.userIsLogged = false;
+      $location.path("/");
+    });
   }
 });

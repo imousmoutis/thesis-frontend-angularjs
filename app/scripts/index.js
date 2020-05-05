@@ -1,5 +1,5 @@
 var app = angular.module('ThesisApp',
-    ['ngRoute', 'ngCookies', 'ngAnimate', 'ngTable', 'angular-jwt', 'ui.bootstrap', 'ng-toggle.btn',
+    ['ngRoute', 'ngCookies', 'ngAnimate', 'ngTable', 'angular-jwt', 'ui.bootstrap',
       'ui-notification']);
 
 app.constant('CONSTANTS', {
@@ -9,7 +9,7 @@ app.constant('CONSTANTS', {
   DEFAULT_SORTING_DIRECTION: 'asc'
 });
 
-app.run(function ($rootScope, $cookies, jwtHelper) {
+app.run(function ($rootScope, $cookies, jwtHelper, Notification) {
   if ($cookies.get("jwt")) {
     $rootScope.userIsLogged = true;
 
@@ -17,26 +17,29 @@ app.run(function ($rootScope, $cookies, jwtHelper) {
     $rootScope.loggedUser = decodedJwt.name;
     $rootScope.loggedUserRole = decodedJwt.role;
   }
+
+  $rootScope.displayErrorMessage = function () {
+    Notification.error({message: 'An error occurred while serving your request. Please try again or contact your'
+          + ' administrator.'});
+  }
 });
 
 app.factory('responseObserver', function responseObserver($q, $rootScope, $location, $cookies) {
   return {
     'responseError': function (errorResponse) {
-      if ($location.absUrl().split('/').pop() != 'login') {
-        switch (errorResponse.status) {
-          case 403:
-            $cookies.remove("jwt");
-            $rootScope.userIsLogged = false;
-            $location.path("/");
-            break;
-        }
+      if (($location.absUrl().split('/').pop() !== 'login') && (errorResponse.status === 403)) {
+        $cookies.remove("jwt");
+        $rootScope.userIsLogged = false;
+        $location.path("/");
+      } else {
+        $rootScope.displayErrorMessage();
       }
       return $q.reject(errorResponse);
     }
   };
 });
 
-app.config(function ($routeProvider, $httpProvider, $locationProvider) {
+app.config(function ($routeProvider, $httpProvider, $locationProvider, NotificationProvider) {
 
   $locationProvider.hashPrefix('');
 
@@ -93,41 +96,19 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider) {
   })
   .otherwise({redirectTo: '/'});
 
+  NotificationProvider.setOptions({
+    delay: 10000,
+    startTop: 20,
+    startRight: 10,
+    verticalSpacing: 20,
+    horizontalSpacing: 20,
+    positionX: 'right',
+    positionY: 'top'
+  });
+
   $(document).on('click', '.navbar-collapse.in', function (e) {
     if ($(e.target).is('a:not(".dropdown-toggle")')) {
       $(this).collapse('hide');
     }
   });
 });
-
-angular.module('ng-toggle.btn', [])
-.directive('toggleBtn', [function () {
-  return {
-    restrict: 'EA',
-    replace: true,
-    require: ['name', '^ngModel'],
-    scope: {
-      isDisabled: '=',
-      onType: '@',
-      offType: '@',
-      name: '@',
-      ngModel: '=',
-      ngChange: '&',
-      onLabel: '@',
-      offLabel: '@',
-      required: '@',
-      ngTrueValue: '@',
-      ngFalseValue: '@'
-    },
-    template:
-        ' <div class="toggle-switch" ng-class="\'on\'+onType+ \' \' + \'off\'+offType"> ' +
-        '		<span ng-if="offLabel" class="off-label" ng-bind="offLabel"></span> ' +
-        ' 	<input ng-model="ngModel" id="{{name}}" name="{{name}}" type="checkbox" selected="ngModel" ng-disabled="isDisabled" ng-change="ngChange()" '
-        +
-        '			hidden="" ng-true-value="{{ngTrueValue? ngTrueValue:true}}" ng-false-value="{{ngFalseValue? ngFalseValue:false}}" ng-required="required"><label for="{{name}}" '
-        +
-        '			class="toggle-knob"></label> ' +
-        '		<span ng-if="onLabel" class="on-label" ng-bind="onLabel"></span> ' +
-        '	</div> '
-  };
-}]);

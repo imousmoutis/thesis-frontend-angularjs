@@ -1,11 +1,11 @@
 app.controller('DashboardController',
-    function ($scope, $rootScope, DashboardService, CONSTANTS, $location, ngTableParams, $uibModal, Notification) {
+    function ($scope, $rootScope, UserService, CONSTANTS, $location, ngTableParams, $uibModal, Notification) {
 
       if ($rootScope.loggedUserRole === CONSTANTS.USER_ADMIN) {
         $scope.users = [];
         $scope.usersLength = 0;
 
-        DashboardService.getUserCount()
+        UserService.getUserCount()
         .then(function (response) {
           $scope.usersLength = response.data;
           getUsers();
@@ -25,7 +25,7 @@ app.controller('DashboardController',
             var column = params.orderBy()[0].slice(1);
             var order = params.orderBy()[0].slice(0, 1);
 
-            DashboardService.getUsers({
+            UserService.getUsers({
               page: params.page() - 1,
               size: params.count(),
               sortColumn: column,
@@ -74,14 +74,12 @@ app.controller('DashboardController',
 
         $scope.save = function () {
           $scope.userInstance.status = $scope.userInstanceStatus ? 1 : 0;
-          DashboardService.saveUser($scope.userInstance)
+          UserService.saveUser($scope.userInstance)
           .then(function (response) {
-            Notification.success({message: 'User successfully saved.', positionY: 'top', positionX: 'right'});
+            Notification.success({message: 'User successfully saved.'});
             $uibModalInstance.close($scope.userInstance);
           }, function (error) {
-            Notification.error({message: 'An error occurred while saving the user.', positionY: 'top', positionX: 'right'});
           });
-
         }
       };
     });

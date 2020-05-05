@@ -1,5 +1,5 @@
 app.controller('LoginController',
-    function ($scope, LoginService, $rootScope, $cookies, $location, jwtHelper, Notification) {
+    function ($scope, IndexService, $rootScope, $cookies, $location, jwtHelper, Notification) {
 
       $scope.forms = {};
       $scope.loginUnavailable = false;
@@ -18,9 +18,9 @@ app.controller('LoginController',
 
       $scope.login = function () {
         $scope.loginUnavailable = false;
-        LoginService.login({username: $scope.user.username, password: $scope.user.password})
+        IndexService.login({username: $scope.user.username, password: $scope.user.password})
         .then(function (response) {
-          Notification.success({message: 'You are successfully logged in.', positionY: 'top', positionX: 'right'});
+          Notification.success({message: 'You are successfully logged in.'});
           var jwt = response.headers('Authorization');
           $cookies.put("jwt", jwt);
           $rootScope.userIsLogged = true;
@@ -30,7 +30,6 @@ app.controller('LoginController',
           $rootScope.loggedUserRole = decodedJwt.role1;
           $location.path("/dashboard");
         }, function (error) {
-          Notification.error({message: 'An error occurred while logging in.', positionY: 'top', positionX: 'right'});
           $scope.loginUnavailable = true;
         });
 
@@ -39,12 +38,11 @@ app.controller('LoginController',
       $scope.register = function () {
         $scope.registerUnavailable = false;
 
-        LoginService.register($scope.user)
+        IndexService.register($scope.user)
         .then(function (response) {
-          Notification.success({message: 'You are successfully registered.', positionY: 'top', positionX: 'right'});
+          Notification.success({message: 'You are successfully registered.'});
           $scope.login();
         }, function (error) {
-          Notification.error({message: 'An error occurred while registering.', positionY: 'top', positionX: 'right'});
         });
       };
     });

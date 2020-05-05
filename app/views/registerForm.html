@@ -9,50 +9,50 @@
 
     <div>
       <div class="input-group"
-           ng-class="{'has-error has-feedback': (forms.registerForm.$submitted && forms.registerForm.username.$invalid)}">
+           ng-class="{'has-error has-feedback': (forms.registerForm.username.$invalid && (forms.registerForm.username.$dirty || forms.registerForm.username.$touched))}">
         <span class="input-group-addon" id="basic-addon1"><em class="glyphicon glyphicon-user"></em></span>
         <input aria-describedby="basic-addon1" class="form-control" name="username" ng-model="user.username"
                placeholder="Username" required/>
       </div>
       <div class="error-message"
-           ng-show="forms.registerForm.$submitted && forms.registerForm.username.$invalid">Username is required.
+           ng-if="forms.registerForm.username.$invalid && (forms.registerForm.username.$dirty || forms.registerForm.username.$touched)">Username is required.
       </div>
     </div>
 
     <div>
       <div class="input-group"
-           ng-class="{'has-error has-feedback': (forms.registerForm.$submitted && forms.registerForm.fullName.$invalid)}">
+           ng-class="{'has-error has-feedback': (forms.registerForm.fullName.$invalid && (forms.registerForm.fullName.$dirty || forms.registerForm.fullName.$touched))}">
         <span class="input-group-addon" id="basic-addon2"><em class="glyphicon glyphicon-info-sign"></em></span>
         <input aria-describedby="basic-addon2" class="form-control" name="fullName" ng-model="user.fullName"
                placeholder="Full name" type="text" required/>
       </div>
       <div class="error-message"
-           ng-show="forms.registerForm.$submitted && forms.registerForm.fullName.$invalid">Full name is required.
+           ng-if="forms.registerForm.fullName.$invalid && (forms.registerForm.fullName.$dirty || forms.registerForm.fullName.$touched)">Full name is required.
       </div>
     </div>
 
     <div>
       <div class="input-group"
-           ng-class="{'has-error has-feedback': (forms.registerForm.$submitted && forms.registerForm.email.$invalid)}">
+           ng-class="{'has-error has-feedback': (forms.registerForm.email.$invalid && (forms.registerForm.email.$dirty || forms.registerForm.email.$touched))}">
         <span class="input-group-addon" id="basic-addon3"><em class="glyphicon glyphicon-envelope"></em></span>
         <input aria-describedby="basic-addon3" class="form-control" name="email" ng-model="user.email"
                placeholder="Email"
                type="email" required/>
       </div>
       <div class="error-message"
-           ng-show="forms.registerForm.$submitted && forms.registerForm.email.$invalid">Email is required.
+           ng-if="forms.registerForm.email.$invalid && (forms.registerForm.email.$dirty || forms.registerForm.email.$touched)">Email is required.
       </div>
     </div>
 
     <div>
       <div class="input-group"
-           ng-class="{'has-error has-feedback': (forms.registerForm.$submitted && forms.registerForm.password.$invalid)}">
+           ng-class="{'has-error has-feedback': (forms.registerForm.password.$invalid && (forms.registerForm.password.$dirty || forms.registerForm.password.$touched))}">
         <span class="input-group-addon" id="basic-addon4"><em class="glyphicon glyphicon-lock"></em></span>
         <input aria-describedby="basic-addon4" class="form-control" name="password" ng-model="user.password"
                placeholder="Password" type="password" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W\_])[A-Za-z\d\W\_]{8,}$"/>
       </div>
       <div class="error-message"
-           ng-show="forms.registerForm.$submitted && forms.registerForm.password.$invalid">Password is required.
+           ng-if="forms.registerForm.password.$invalid && (forms.registerForm.password.$dirty || forms.registerForm.password.$touched)">Password is required.
       </div>
     </div>
 
