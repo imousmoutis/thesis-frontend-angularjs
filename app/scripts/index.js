@@ -19,8 +19,16 @@ app.run(function ($rootScope, $cookies, jwtHelper, Notification) {
   }
 
   $rootScope.displayErrorMessage = function () {
-    Notification.error({message: 'An error occurred while serving your request. Please try again or contact your'
-          + ' administrator.'});
+    Notification.error({
+      message: 'An error occurred while serving your request. Please try again or contact your'
+          + ' administrator.'
+    });
+  }
+
+  $rootScope.unAuthorizedErrorMessage = function () {
+    Notification.error({
+      message: 'You tried to access a page for which you do not have access. You are being logged out.'
+    });
   }
 });
 
@@ -28,6 +36,7 @@ app.factory('responseObserver', function responseObserver($q, $rootScope, $locat
   return {
     'responseError': function (errorResponse) {
       if (($location.absUrl().split('/').pop() !== 'login') && (errorResponse.status === 403)) {
+        $rootScope.unAuthorizedErrorMessage();
         $cookies.remove("jwt");
         $rootScope.userIsLogged = false;
         $location.path("/");
@@ -87,6 +96,25 @@ app.config(function ($routeProvider, $httpProvider, $locationProvider, Notificat
         } else {
           $rootScope.title = 'Dashboard Page';
           $rootScope.activePage = 3;
+        }
+
+        defer.resolve();
+        return defer.promise;
+      }
+    }
+  })
+  .when('/admin', {
+    templateUrl: 'html/admin.html',
+    controller: 'AdminController',
+    resolve: {
+      app: function ($q, $rootScope, $location) {
+        var defer = $q.defer();
+
+        if (!$rootScope.userIsLogged) {
+          $location.path('/');
+        } else {
+          $rootScope.title = 'Admin Page';
+          $rootScope.activePage = 4;
         }
 
         defer.resolve();

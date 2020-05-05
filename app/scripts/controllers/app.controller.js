@@ -1,4 +1,6 @@
-app.controller('AppController', function ($rootScope, $cookies, $location, $scope, jwtHelper, IndexService) {
+app.controller('AppController', function ($rootScope, $cookies, $location, $scope, jwtHelper, IndexService, CONSTANTS) {
+
+  $scope.CONSTANTS = CONSTANTS;
 
   if ($cookies.get("jwt")) {
     var decodedJwt = jwtHelper.decodeToken($cookies.get("jwt"));

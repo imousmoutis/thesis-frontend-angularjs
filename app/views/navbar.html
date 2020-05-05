@@ -18,8 +18,13 @@
         <li ng-class="{'active': activePage == 2}" ng-if="!userIsLogged" class="navbar-li">
           <a href="#/login">Login</a>
         </li>
-        <li ng-class="{'active': activePage == 3}" ng-if="userIsLogged" class="navbar-li">
+        <li ng-class="{'active': activePage == 3}" ng-if="userIsLogged && (loggedUserRole !== CONSTANTS.USER_ADMIN)"
+            class="navbar-li">
           <a href="#/dashboard">Dashboard</a>
+        </li>
+        <li ng-class="{'active': activePage == 4}" ng-if="userIsLogged && (loggedUserRole === CONSTANTS.USER_ADMIN)"
+            class="navbar-li">
+          <a href="#/admin">Admin</a>
         </li>
         <li ng-if="userIsLogged" class="navbar-li">
           <a data-ng-click="logout()" style="cursor:pointer;">Logout</a>
