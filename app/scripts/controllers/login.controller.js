@@ -1,5 +1,5 @@
 app.controller('LoginController',
-    function ($scope, IndexService, $rootScope, $cookies, $location, jwtHelper, Notification) {
+    function ($scope, IndexService, $rootScope, $cookies, $location, jwtHelper, Notification, CONSTANTS) {
 
       $scope.forms = {};
       $scope.loginUnavailable = false;
@@ -28,7 +28,11 @@ app.controller('LoginController',
           var decodedJwt = jwtHelper.decodeToken(jwt);
           $rootScope.loggedUser = decodedJwt.sub;
           $rootScope.loggedUserRole = decodedJwt.role1;
-          $location.path("/dashboard");
+          if ($rootScope.loggedUserRole === CONSTANTS.USER_ADMIN){
+            $location.path("/admin");
+          } else {
+            $location.path("/dashboard");
+          }
         }, function (error) {
           $scope.loginUnavailable = true;
         });
