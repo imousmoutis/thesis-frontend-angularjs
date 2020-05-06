@@ -1,11 +1,5 @@
 app.controller('LoginController',
-    function ($scope, IndexService, $rootScope, $cookies, $location, jwtHelper, Notification, CONSTANTS, $filter,
-        $translate) {
-
-      $translate('login')
-      .then(function (translatedValue) {
-        $rootScope.title = translatedValue;
-      });
+    function ($scope, IndexService, $rootScope, $cookies, $location, jwtHelper, Notification, CONSTANTS, $filter) {
 
       $scope.forms = {};
       $scope.loginUnavailable = false;

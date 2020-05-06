@@ -1,9 +1,7 @@
 app.controller('NavbarController',
-    function ($rootScope, $cookies, $location, $scope, jwtHelper, IndexService, CONSTANTS, $translate, $filter) {
+    function ($rootScope, $cookies, $location, $scope, jwtHelper, IndexService, CONSTANTS, $translate) {
 
       $scope.CONSTANTS = CONSTANTS;
-
-      $scope.currentLanguage = $translate.use();
 
       if ($cookies.get("jwt")) {
         var decodedJwt = jwtHelper.decodeToken($cookies.get("jwt"));
@@ -22,24 +20,6 @@ app.controller('NavbarController',
 
       $scope.changeLanguage = function (lang) {
         $translate.use(lang);
-        $scope.currentLanguage = lang;
-        updateTitle();
-      };
-
-      updateTitle = function () {
-        console.log($location.path() === '/');
-        if ($location.path() === '/') {
-          $translate('admin')
-          .then(function (translatedValue) {
-            $rootScope.title = translatedValue;
-          });
-        } else if ($location.path() === '/login') {
-          $rootScope.title = $filter('translate')('login');
-        } else if ($location.path() === '/admin') {
-          $rootScope.title = $filter('translate')('admin');
-        } else if ($location.path() === '/dashboard') {
-          $rootScope.title = $filter('translate')('dashboard');
-        }
       };
 
     });

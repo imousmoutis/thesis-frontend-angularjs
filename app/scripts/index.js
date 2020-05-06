@@ -9,7 +9,7 @@ app.constant('CONSTANTS', {
   DEFAULT_SORTING_DIRECTION: 'asc'
 });
 
-app.run(function ($rootScope, $cookies, jwtHelper, Notification, $filter) {
+app.run(function ($rootScope, $cookies, jwtHelper, Notification, $filter, $location, $translate) {
   if ($cookies.get("jwt")) {
     $rootScope.userIsLogged = true;
 
@@ -29,6 +29,27 @@ app.run(function ($rootScope, $cookies, jwtHelper, Notification, $filter) {
       message: $filter('translate')('unauthorizedError')
     });
   };
+
+  $rootScope.$on('$translateChangeSuccess', function () {
+    updateTitle();
+    $rootScope.currentLanguage = $translate.use();
+  });
+
+  $rootScope.$on('$routeChangeStart', function () {
+   updateTitle();
+  });
+
+  updateTitle = function () {
+    if ($location.path() === '/') {
+      $rootScope.title = $filter('translate')('home');
+    } else if ($location.path() === '/login') {
+      $rootScope.title = $filter('translate')('login');
+    } else if ($location.path() === '/admin') {
+      $rootScope.title = $filter('translate')('admin');
+    } else if ($location.path() === '/dashboard') {
+      $rootScope.title = $filter('translate')('dashboard');
+    }
+  }
 });
 
 app.factory('responseObserver', function responseObserver($q, $rootScope, $location, $cookies) {

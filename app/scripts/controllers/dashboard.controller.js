@@ -1,8 +1,4 @@
 app.controller('DashboardController',
-    function ($scope, $rootScope, $filter, $translate) {
+    function ($scope, $rootScope) {
 
-      $translate('dashboard')
-      .then(function (translatedValue) {
-        $rootScope.title = translatedValue;
-      });
     });

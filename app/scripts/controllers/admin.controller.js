@@ -2,11 +2,6 @@ app.controller('AdminController',
     function ($scope, $rootScope, UserService, CONSTANTS, $location, ngTableParams, $uibModal, Notification, $filter,
         $translate) {
 
-      $translate('admin')
-      .then(function (translatedValue) {
-        $rootScope.title = translatedValue;
-      });
-
       $scope.users = [];
       $scope.usersLength = 0;
 

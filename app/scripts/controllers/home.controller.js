@@ -1,9 +1,4 @@
-app.controller('HomeController', function ($scope, IndexService, $filter, $rootScope, $translate) {
-
-  $translate('home')
-  .then(function (translatedValue) {
-    $rootScope.title = translatedValue;
-  });
+app.controller('HomeController', function ($scope, IndexService, $filter) {
 
   $scope.serverStatus = $filter('translate')('serverConnection');
 
