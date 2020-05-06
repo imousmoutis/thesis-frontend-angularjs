@@ -1,5 +1,5 @@
 app.controller('LoginController',
-    function ($scope, IndexService, $rootScope, $cookies, $location, jwtHelper, Notification, CONSTANTS, $filter) {
+    function ($scope, IndexService, $rootScope, $localStorage, $location, jwtHelper, Notification, CONSTANTS, $filter) {
 
       $scope.forms = {};
       $scope.loginUnavailable = false;
@@ -24,7 +24,7 @@ app.controller('LoginController',
           .then(function (response) {
             Notification.success({message: $filter('translate')('loginSuccessful')});
             var jwt = response.headers('Authorization');
-            $cookies.put("jwt", jwt);
+            $localStorage.jwt = jwt;
             $rootScope.userIsLogged = true;
 
             var decodedJwt = jwtHelper.decodeToken(jwt);

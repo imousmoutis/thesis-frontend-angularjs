@@ -1,4 +1,4 @@
-app.factory('IndexService', function ($http, CONSTANTS, $cookies) {
+app.factory('IndexService', function ($http, CONSTANTS, $localStorage) {
 
   return {
     getServerStatus: function () {
@@ -12,7 +12,7 @@ app.factory('IndexService', function ($http, CONSTANTS, $cookies) {
     },
     logout: function (user) {
       return $http.delete(CONSTANTS.BASE + 'logout/', {
-        headers: {'Authorization': $cookies.get('jwt')}
+        headers: {'Authorization': $localStorage.jwt}
       });
     },
   };

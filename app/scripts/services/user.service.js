@@ -1,25 +1,25 @@
-app.factory('UserService', function ($http, CONSTANTS, $cookies) {
+app.factory('UserService', function ($http, CONSTANTS, $localStorage) {
 
   return {
     getUserCount: function () {
       return $http.get(CONSTANTS.BASE + 'user/count/', {
-        headers: {'Authorization': $cookies.get('jwt')}
+        headers: {'Authorization': $localStorage.jwt}
       });
     },
     getUsers: function (params) {
       return $http.get(CONSTANTS.BASE + 'user/', {
-        headers: {'Authorization': $cookies.get('jwt')},
+        headers: {'Authorization': $localStorage.jwt},
         params: params
       });
     },
     saveUser: function (user) {
       return $http.post(CONSTANTS.BASE + 'user/', user, {
-        headers: {'Authorization': $cookies.get('jwt')}
+        headers: {'Authorization': $localStorage.jwt}
       });
     },
     deleteUser: function (userId) {
       return $http.delete(CONSTANTS.BASE + 'user/' + userId, {
-        headers: {'Authorization': $cookies.get('jwt')}
+        headers: {'Authorization': $localStorage.jwt}
       });
     }
   };

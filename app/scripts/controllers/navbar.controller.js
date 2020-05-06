@@ -1,5 +1,5 @@
 app.controller('NavbarController',
-    function ($rootScope, $cookies, $location, $scope, jwtHelper, IndexService, CONSTANTS, $translate, LexiconService) {
+    function ($rootScope, $location, $scope, jwtHelper, IndexService, CONSTANTS, $translate, LexiconService, $localStorage) {
 
       $scope.CONSTANTS = CONSTANTS;
 
@@ -8,16 +8,10 @@ app.controller('NavbarController',
         $scope.languages = response.data;
       });
 
-      if ($cookies.get("jwt")) {
-        var decodedJwt = jwtHelper.decodeToken($cookies.get("jwt"));
-        $rootScope.loggedUser = decodedJwt.sub;
-        $rootScope.loggedUserRole = decodedJwt.role1;
-      }
-
       $scope.logout = function () {
         IndexService.logout()
         .then(function (response) {
-          $cookies.remove("jwt");
+          $localStorage.jwt = null;
           $rootScope.userIsLogged = false;
           $location.path("/");
         });

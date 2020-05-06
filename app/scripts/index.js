@@ -9,13 +9,13 @@ app.constant('CONSTANTS', {
   DEFAULT_SORTING_DIRECTION: 'asc'
 });
 
-app.run(function ($rootScope, $cookies, jwtHelper, Notification, $filter, $location, $translate) {
-  if ($cookies.get("jwt")) {
+app.run(function ($rootScope, $localStorage, jwtHelper, Notification, $filter, $location, $translate) {
+  if ($localStorage.jwt) {
     $rootScope.userIsLogged = true;
 
-    var decodedJwt = jwtHelper.decodeToken($cookies.get("jwt"));
+    var decodedJwt = jwtHelper.decodeToken($localStorage.jwt);
     $rootScope.loggedUser = decodedJwt.name;
-    $rootScope.loggedUserRole = decodedJwt.role;
+    $rootScope.loggedUserRole = decodedJwt.role1;
   }
 
   $rootScope.displayErrorMessage = function () {
@@ -52,12 +52,12 @@ app.run(function ($rootScope, $cookies, jwtHelper, Notification, $filter, $locat
   }
 });
 
-app.factory('responseObserver', function responseObserver($q, $rootScope, $location, $cookies) {
+app.factory('responseObserver', function responseObserver($q, $rootScope, $location, $localStorage) {
   return {
     'responseError': function (errorResponse) {
       if (($location.absUrl().split('/').pop() !== 'login') && (errorResponse.status === 403)) {
         $rootScope.unAuthorizedErrorMessage();
-        $cookies.remove("jwt");
+        $localStorage.jwt = null;
         $rootScope.userIsLogged = false;
         $location.path("/");
       } else {
