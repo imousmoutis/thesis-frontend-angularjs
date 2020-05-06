@@ -14,7 +14,7 @@ app.run(function ($rootScope, $localStorage, jwtHelper, Notification, $filter, $
     $rootScope.userIsLogged = true;
 
     var decodedJwt = jwtHelper.decodeToken($localStorage.jwt);
-    $rootScope.loggedUser = decodedJwt.name;
+    $rootScope.loggedUser = decodedJwt.sub;
     $rootScope.loggedUserRole = decodedJwt.role1;
   }
 
