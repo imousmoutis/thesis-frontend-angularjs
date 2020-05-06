@@ -1,7 +1,12 @@
 app.controller('NavbarController',
-    function ($rootScope, $cookies, $location, $scope, jwtHelper, IndexService, CONSTANTS, $translate) {
+    function ($rootScope, $cookies, $location, $scope, jwtHelper, IndexService, CONSTANTS, $translate, LexiconService) {
 
       $scope.CONSTANTS = CONSTANTS;
+
+      LexiconService.getLanguages()
+      .then(function (response) {
+        $scope.languages = response.data;
+      });
 
       if ($cookies.get("jwt")) {
         var decodedJwt = jwtHelper.decodeToken($cookies.get("jwt"));

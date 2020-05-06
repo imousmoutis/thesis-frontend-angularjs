@@ -36,11 +36,8 @@
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <li ng-class="{active: currentLanguage === 'en'}">
-              <a href="" ng-click="changeLanguage('en')">{{'english' | translate}}</a>
-            </li>
-            <li ng-class="{active: currentLanguage === 'gr'}">
-              <a href="" ng-click="changeLanguage('gr')">{{'greek' | translate}}</a>
+            <li ng-repeat="language in languages" ng-class="{active: currentLanguage === language.locale}">
+              <a href="" ng-click="changeLanguage(language.locale)">{{language.name | translate}}</a>
             </li>
           </ul>
         </li>
