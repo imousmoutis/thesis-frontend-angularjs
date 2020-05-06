@@ -31,6 +31,7 @@ app.controller('AdminController',
             })
             .then(function (response) {
               $defer.resolve(response.data.content);
+              $scope.usersLength = response.data.totalElements;
             });
           }
         });
@@ -59,6 +60,7 @@ app.controller('AdminController',
       };
 
       var EditUserController = function (user, $uibModalInstance) {
+        $scope.forms = {};
         $scope.userInstance = angular.copy(user);
         $scope.userInstanceStatus = (user.status === 1);
 
@@ -78,6 +80,46 @@ app.controller('AdminController',
             $uibModalInstance.close($scope.userInstance);
           }, function (error) {
           });
-        }
+        };
+
+        $scope.delete = function () {
+
+          var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'html/confirmationDialog.html',
+            controller: ConfirmationDialogController,
+            scope: $scope.$new(),
+            resolve: {
+              message: function () {
+                return "Are you sure you want to delete this user?";
+              }
+            }
+          });
+
+          modalInstance.result
+          .then(function (response) {
+            if (response) {
+              UserService.deleteUser($scope.userInstance.id)
+              .then(function (response) {
+                Notification.success({message: 'User successfully deleted.'});
+                $uibModalInstance.close($scope.userInstance);
+              }, function (error) {
+              });
+            }
+          });
+
+        };
+
+        var ConfirmationDialogController = function (message, $uibModalInstance) {
+          $scope.confirmationMessage = message;
+
+          $scope.confirm = function () {
+            $uibModalInstance.close(true);
+          };
+
+          $scope.dismiss = function () {
+            $uibModalInstance.close(false);
+          }
+        };
       };
     });

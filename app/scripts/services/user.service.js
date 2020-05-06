@@ -16,6 +16,11 @@ app.factory('UserService', function ($http, CONSTANTS, $cookies) {
       return $http.post(CONSTANTS.BASE + 'user/', user, {
         headers: {'Authorization': $cookies.get('jwt')}
       });
+    },
+    deleteUser: function (userId) {
+      return $http.delete(CONSTANTS.BASE + 'user/' + userId, {
+        headers: {'Authorization': $cookies.get('jwt')}
+      });
     }
   };
 });
