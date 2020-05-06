@@ -1,5 +1,11 @@
 app.controller('LoginController',
-    function ($scope, IndexService, $rootScope, $cookies, $location, jwtHelper, Notification, CONSTANTS) {
+    function ($scope, IndexService, $rootScope, $cookies, $location, jwtHelper, Notification, CONSTANTS, $filter,
+        $translate) {
+
+      $translate('login')
+      .then(function (translatedValue) {
+        $rootScope.title = translatedValue;
+      });
 
       $scope.forms = {};
       $scope.loginUnavailable = false;
@@ -16,37 +22,41 @@ app.controller('LoginController',
         $scope.loginForm = !$scope.loginForm;
       };
 
-      $scope.login = function () {
-        $scope.loginUnavailable = false;
-        IndexService.login({username: $scope.user.username, password: $scope.user.password})
-        .then(function (response) {
-          Notification.success({message: 'You are successfully logged in.'});
-          var jwt = response.headers('Authorization');
-          $cookies.put("jwt", jwt);
-          $rootScope.userIsLogged = true;
+      $scope.login = function (bypassCheck) {
 
-          var decodedJwt = jwtHelper.decodeToken(jwt);
-          $rootScope.loggedUser = decodedJwt.sub;
-          $rootScope.loggedUserRole = decodedJwt.role1;
-          if ($rootScope.loggedUserRole === CONSTANTS.USER_ADMIN){
-            $location.path("/admin");
-          } else {
-            $location.path("/dashboard");
-          }
-        }, function (error) {
-          $scope.loginUnavailable = true;
-        });
+        if (bypassCheck || $scope.forms.loginForm.$valid) {
+          $scope.loginUnavailable = false;
+          IndexService.login({username: $scope.user.username, password: $scope.user.password})
+          .then(function (response) {
+            Notification.success({message: $filter('translate')('loginSuccessful')});
+            var jwt = response.headers('Authorization');
+            $cookies.put("jwt", jwt);
+            $rootScope.userIsLogged = true;
+
+            var decodedJwt = jwtHelper.decodeToken(jwt);
+            $rootScope.loggedUser = decodedJwt.sub;
+            $rootScope.loggedUserRole = decodedJwt.role1;
+            if ($rootScope.loggedUserRole === CONSTANTS.USER_ADMIN) {
+              $location.path("/admin");
+            } else {
+              $location.path("/dashboard");
+            }
+          }, function (error) {
+            $scope.loginUnavailable = true;
+          });
+        }
 
       };
 
       $scope.register = function () {
-        $scope.registerUnavailable = false;
 
-        IndexService.register($scope.user)
-        .then(function (response) {
-          Notification.success({message: 'You are successfully registered.'});
-          $scope.login();
-        }, function (error) {
-        });
+        if ($scope.forms.registerForm.$valid) {
+          IndexService.register($scope.user)
+          .then(function (response) {
+            Notification.success({message: $filter('translate')('registerSuccessful')});
+            $scope.login(true);
+          }, function (error) {
+          });
+        }
       };
     });

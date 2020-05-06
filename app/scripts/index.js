@@ -1,6 +1,6 @@
 var app = angular.module('ThesisApp',
-    ['ngRoute', 'ngCookies', 'ngAnimate', 'ngTable', 'angular-jwt', 'ui.bootstrap',
-      'ui-notification']);
+    ['ngRoute', 'ngAnimate', 'ngTable', 'angular-jwt', 'ui.bootstrap',
+      'ui-notification', 'pascalprecht.translate', 'ngStorage', 'ngCookies', 'ngSanitize']);
 
 app.constant('CONSTANTS', {
   BASE: 'http://localhost:8080/thesis/api/',
@@ -9,7 +9,7 @@ app.constant('CONSTANTS', {
   DEFAULT_SORTING_DIRECTION: 'asc'
 });
 
-app.run(function ($rootScope, $cookies, jwtHelper, Notification) {
+app.run(function ($rootScope, $cookies, jwtHelper, Notification, $filter) {
   if ($cookies.get("jwt")) {
     $rootScope.userIsLogged = true;
 
@@ -20,16 +20,15 @@ app.run(function ($rootScope, $cookies, jwtHelper, Notification) {
 
   $rootScope.displayErrorMessage = function () {
     Notification.error({
-      message: 'An error occurred while serving your request. Please try again or contact your'
-          + ' administrator.'
+      message: $filter('translate')('genericError')
     });
-  }
+  };
 
   $rootScope.unAuthorizedErrorMessage = function () {
     Notification.error({
-      message: 'You tried to access a page for which you do not have access. You are being logged out.'
+      message: $filter('translate')('unauthorizedError')
     });
-  }
+  };
 });
 
 app.factory('responseObserver', function responseObserver($q, $rootScope, $location, $cookies) {
@@ -48,95 +47,98 @@ app.factory('responseObserver', function responseObserver($q, $rootScope, $locat
   };
 });
 
-app.config(function ($routeProvider, $httpProvider, $locationProvider, NotificationProvider) {
+app.config(
+    function ($routeProvider, $httpProvider, $locationProvider, NotificationProvider, $translateProvider, CONSTANTS) {
 
-  $locationProvider.hashPrefix('');
+      $translateProvider
+      .preferredLanguage("en")
+      .useLocalStorage()
+      .useSanitizeValueStrategy("escaped")
+      .useUrlLoader(CONSTANTS.BASE + "lexicon/");
 
-  $httpProvider.interceptors.push('responseObserver');
+      $locationProvider.hashPrefix('');
 
-  $routeProvider
-  .when('/', {
-    templateUrl: 'html/home.html',
-    controller: 'HomeController',
-    resolve: {
-      app: function ($rootScope) {
-        $rootScope.title = 'Home Page';
-        $rootScope.activePage = 1;
-      }
-    }
-  })
-  .when('/login', {
-    templateUrl: 'html/login.html',
-    controller: 'LoginController',
-    resolve: {
-      app: function ($q, $rootScope, $location) {
-        var defer = $q.defer();
+      $httpProvider.interceptors.push('responseObserver');
 
-        if ($rootScope.userIsLogged) {
-          $location.path('/dashboard');
-        } else {
-          $rootScope.title = 'Login Page';
-          $rootScope.activePage = 2;
+      $routeProvider
+      .when('/', {
+        templateUrl: 'html/home.html',
+        controller: 'HomeController',
+        resolve: {
+          app: function ($rootScope) {
+            $rootScope.activePage = 1;
+          }
         }
+      })
+      .when('/login', {
+        templateUrl: 'html/login.html',
+        controller: 'LoginController',
+        resolve: {
+          app: function ($q, $rootScope, $location) {
+            var defer = $q.defer();
 
-        defer.resolve();
-        return defer.promise;
-      }
-    }
-  })
-  .when('/dashboard', {
-    templateUrl: 'html/dashboard.html',
-    controller: 'DashboardController',
-    resolve: {
-      app: function ($q, $rootScope, $location) {
-        var defer = $q.defer();
+            if ($rootScope.userIsLogged) {
+              $location.path('/dashboard');
+            } else {
+              $rootScope.activePage = 2;
+            }
 
-        if (!$rootScope.userIsLogged) {
-          $location.path('/');
-        } else {
-          $rootScope.title = 'Dashboard Page';
-          $rootScope.activePage = 3;
+            defer.resolve();
+            return defer.promise;
+          }
         }
+      })
+      .when('/dashboard', {
+        templateUrl: 'html/dashboard.html',
+        controller: 'DashboardController',
+        resolve: {
+          app: function ($q, $rootScope, $location) {
+            var defer = $q.defer();
 
-        defer.resolve();
-        return defer.promise;
-      }
-    }
-  })
-  .when('/admin', {
-    templateUrl: 'html/admin.html',
-    controller: 'AdminController',
-    resolve: {
-      app: function ($q, $rootScope, $location) {
-        var defer = $q.defer();
+            if (!$rootScope.userIsLogged) {
+              $location.path('/');
+            } else {
+              $rootScope.activePage = 3;
+            }
 
-        if (!$rootScope.userIsLogged) {
-          $location.path('/');
-        } else {
-          $rootScope.title = 'Admin Page';
-          $rootScope.activePage = 4;
+            defer.resolve();
+            return defer.promise;
+          }
         }
+      })
+      .when('/admin', {
+        templateUrl: 'html/admin.html',
+        controller: 'AdminController',
+        resolve: {
+          app: function ($q, $rootScope, $location) {
+            var defer = $q.defer();
 
-        defer.resolve();
-        return defer.promise;
-      }
-    }
-  })
-  .otherwise({redirectTo: '/'});
+            if (!$rootScope.userIsLogged) {
+              $location.path('/');
+            } else {
+              $rootScope.activePage = 4;
+            }
 
-  NotificationProvider.setOptions({
-    delay: 10000,
-    startTop: 20,
-    startRight: 10,
-    verticalSpacing: 20,
-    horizontalSpacing: 20,
-    positionX: 'right',
-    positionY: 'top'
-  });
+            defer.resolve();
+            return defer.promise;
+          }
+        }
+      })
+      .otherwise({redirectTo: '/'});
 
-  $(document).on('click', '.navbar-collapse.in', function (e) {
-    if ($(e.target).is('a:not(".dropdown-toggle")')) {
-      $(this).collapse('hide');
-    }
-  });
-});
+      NotificationProvider.setOptions({
+        delay: 10000,
+        startTop: 20,
+        startRight: 10,
+        verticalSpacing: 20,
+        horizontalSpacing: 20,
+        positionX: 'right',
+        positionY: 'top'
+      });
+
+      $(document).on('click', '.navbar-collapse.in', function (e) {
+        if ($(e.target).is('a:not(".dropdown-toggle")')) {
+          $(this).collapse('hide');
+        }
+      });
+    });

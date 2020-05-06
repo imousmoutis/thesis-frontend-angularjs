@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top" data-ng-controller="AppController">
+<nav class="navbar navbar-default navbar-fixed-top" data-ng-controller="NavbarController">
   <div class="container">
     <div class="navbar-header">
       <button aria-controls="navbar" aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar"
@@ -12,22 +12,37 @@
     </div>
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="nav navbar-nav">
-        <li ng-class="{'active': activePage == 1}" class="navbar-li">
-          <a href="#/">Home</a>
+        <li class="navbar-li" ng-class="{'active': activePage == 1}">
+          <a href="#/">{{'home'| translate}}</a>
         </li>
-        <li ng-class="{'active': activePage == 2}" ng-if="!userIsLogged" class="navbar-li">
-          <a href="#/login">Login</a>
+        <li class="navbar-li" ng-class="{'active': activePage == 2}" ng-if="!userIsLogged">
+          <a href="#/login">{{'login'| translate}}</a>
         </li>
-        <li ng-class="{'active': activePage == 3}" ng-if="userIsLogged && (loggedUserRole !== CONSTANTS.USER_ADMIN)"
-            class="navbar-li">
-          <a href="#/dashboard">Dashboard</a>
+        <li class="navbar-li" ng-class="{'active': activePage == 3}"
+            ng-if="userIsLogged && (loggedUserRole !== CONSTANTS.USER_ADMIN)">
+          <a href="#/dashboard">{{'dashboard'| translate}}</a>
         </li>
-        <li ng-class="{'active': activePage == 4}" ng-if="userIsLogged && (loggedUserRole === CONSTANTS.USER_ADMIN)"
-            class="navbar-li">
-          <a href="#/admin">Admin</a>
+        <li class="navbar-li" ng-class="{'active': activePage == 4}"
+            ng-if="userIsLogged && (loggedUserRole === CONSTANTS.USER_ADMIN)">
+          <a href="#/admin">{{'admin'| translate}}</a>
         </li>
-        <li ng-if="userIsLogged" class="navbar-li">
-          <a data-ng-click="logout()" style="cursor:pointer;">Logout</a>
+        <li class="navbar-li" ng-if="userIsLogged">
+          <a data-ng-click="logout()" style="cursor:pointer;">{{'logout'| translate}}</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="">{{'language' | translate}}
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li ng-class="{active: currentLanguage === 'en'}">
+              <a href="" ng-click="changeLanguage('en')">{{'english' | translate}}</a>
+            </li>
+            <li ng-class="{active: currentLanguage === 'gr'}">
+              <a href="" ng-click="changeLanguage('gr')">{{'greek' | translate}}</a>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>

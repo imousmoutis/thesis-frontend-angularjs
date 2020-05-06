@@ -52,14 +52,42 @@ body {
   }
 }
 
-.navbar-li > a, .navbar-header > a {
+.navbar-li > a, .navbar-header > a, .dropdown > a, .dropdown-menu > a {
   color: white !important;
   background-color: transparent !important;
   font-weight: 600 !important;
 }
 
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: white !important;
+  }
+
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a {
+    color: yellow !important;
+  }
+}
+
 .active > a {
   color: yellow !important;
+}
+
+.dropdown-menu {
+  background-color: $background_color_1 !important;
+  border: 1px solid transparent;
+
+  > li a {
+    color: white;
+  }
+
+  > li a:hover, li a:focus {
+    color: white;
+    background-color: unset !important;
+  }
+
+  > .active a {
+    background-color: $background_color_1 !important;
+  }
 }
 
 .footer {

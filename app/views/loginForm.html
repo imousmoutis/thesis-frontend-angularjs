@@ -1,50 +1,51 @@
 <div class="panel-heading">
-  <div class="panel-title text-center">Login using your credentials</div>
+  <div class="panel-title text-center">{{'loginHeader' | translate}}</div>
 </div>
 
 <div class="panel-body">
 
-  <form class="form-horizontal" id="form" name="forms.loginForm" ng-submit="forms.loginForm.$valid && login()"
+  <form class="form-horizontal" id="form" name="forms.loginForm" ng-submit="login(false)"
         novalidate>
 
     <div>
       <div class="input-group"
-           ng-class="{'has-error has-feedback': (forms.loginForm.username.$invalid && (forms.loginForm.username.$dirty || forms.loginForm.username.$touched))}">
+           ng-class="{'has-error has-feedback': (forms.loginForm.username.$invalid && (forms.loginForm.username.$dirty || forms.loginForm.$submitted))}">
         <span class="input-group-addon" id="basic-addon1"><em class="glyphicon glyphicon-user"></em></span>
         <input aria-describedby="basic-addon1" class="form-control" name="username" ng-model="user.username"
-               placeholder="Username"
-               type="text" required/>
+               placeholder="{{'username' | translate}}"
+               required type="text"/>
       </div>
       <div class="error-message"
-           ng-if="forms.loginForm.username.$invalid && (forms.loginForm.username.$dirty || forms.loginForm.username.$touched)">Username is required.
+           ng-if="forms.loginForm.username.$invalid && (forms.loginForm.username.$dirty || forms.loginForm.$submitted)">
+        {{'usernameRequired' | translate}}
       </div>
     </div>
 
     <div>
       <div class="input-group"
-           ng-class="{'has-error has-feedback': (forms.loginForm.password.$invalid && (forms.loginForm.password.$dirty || forms.loginForm.password.$touched))}">
+           ng-class="{'has-error has-feedback': (forms.loginForm.password.$invalid && (forms.loginForm.password.$dirty || forms.loginForm.$submitted))}">
         <span class="input-group-addon" id="basic-addon2"><em class="glyphicon glyphicon-lock"></em></span>
-        <input aria-describedby="basic-addon2" class="form-control" ng-model="user.password"
-               placeholder="Password" type="password" name="password" required/>
+        <input aria-describedby="basic-addon2" class="form-control" name="password"
+               ng-model="user.password" placeholder="{{'password' | translate}}" required type="password"/>
       </div>
       <div class="error-message"
-           ng-if="forms.loginForm.password.$invalid && (forms.loginForm.password.$dirty || forms.loginForm.password.$touched)">Password
-        is required.
+           ng-if="forms.loginForm.password.$invalid && (forms.loginForm.password.$dirty || forms.loginForm.$submitted)">
+        {{'passwordRequired' | translate}}
       </div>
     </div>
 
-    <div class="alert alert-danger" ng-show="loginUnavailable" role="alert">Please check your credentials.</div>
+    <div class="alert alert-danger" ng-show="loginUnavailable" role="alert">{{'credentialsInvalid' | translate}}</div>
 
     <div class="form-group">
       <div class="col-sm-12">
         <button class="btn btn-default" ng-click="toggleLoginForm()" type="button">
           <em class="glyphicon glyphicon-book"></em>
-          New here? Register.
+          {{'registerButton' | translate}}
         </button>
 
         <button class="btn btn-primary pull-right" type="submit">
           <em class="glyphicon glyphicon-log-in"></em>
-          Log in!
+          {{'login' | translate}}
         </button>
       </div>
     </div>

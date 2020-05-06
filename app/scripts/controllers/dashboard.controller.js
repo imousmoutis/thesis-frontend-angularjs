@@ -1,5 +1,8 @@
 app.controller('DashboardController',
-    function ($scope, $rootScope, CONSTANTS) {
+    function ($scope, $rootScope, $filter, $translate) {
 
-      console.log("DASHBOARD");
+      $translate('dashboard')
+      .then(function (translatedValue) {
+        $rootScope.title = translatedValue;
+      });
     });

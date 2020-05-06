@@ -1,51 +1,62 @@
 <div class="modal-header">
-  <h3 class="modal-title" id="modal-title">Edit User</h3>
+  <h3 class="modal-title" id="modal-title">{{'editUser' | translate}}</h3>
 </div>
-<form class="form-horizontal" id="editUserForm"  name="forms.editUserForm"
-      ng-submit="forms.editUserForm.$dirty && forms.editUserForm.$valid && save()" novalidate>
+<form class="form-horizontal" id="editUserForm" name="forms.editUserForm"
+      ng-submit="save()" novalidate>
 
   <div class="modal-body" id="modal-body">
     <div>
-      <div class="input-group" style="margin-top: 2px;"
-           ng-class="{'has-error has-feedback': (forms.editUserForm.username.$invalid && (forms.editUserForm.username.$dirty || forms.editUserForm.username.$touched))}">
+      <div class="input-group" ng-class="{'has-error has-feedback': (forms.editUserForm.username.$invalid && (forms.editUserForm.username.$dirty || forms.editUserForm.$submitted))}"
+           style="margin-top: 2px;">
         <span class="input-group-addon" id="basic-addon1"><em class="glyphicon glyphicon-user"></em></span>
         <input aria-describedby="basic-addon1" class="form-control" id="user" name="username"
-               ng-model="userInstance.username" placeholder="Username" required/>
+               ng-model="userInstance.username" placeholder="{{'username' | translate}}" required/>
       </div>
       <div class="error-message"
-           ng-if="forms.editUserForm.username.$invalid && (forms.editUserForm.username.$dirty || forms.editUserForm.username.$touched)">
-        Username is required.
+           ng-if="forms.editUserForm.username.$invalid && (forms.editUserForm.username.$dirty || forms.editUserForm.$submitted)">
+        {{'usernameRequired' | translate}}
       </div>
     </div>
 
     <div class="input-group" style="margin-top: 20px;">
       <span class="input-group-addon" id="basic-addon2"><em class="glyphicon glyphicon-info-sign"></em></span>
       <input aria-describedby="basic-addon2" class="form-control" id="name" name="fullname"
-             ng-model="(userInstance.userAttributes | filter:{name:'fullName'})[0].data" placeholder="Full name"
+             ng-model="(userInstance.userAttributes | filter:{name:'fullName'})[0].data"
+             placeholder="{{'fullName' | translate}}"
              readonly type="text"/>
     </div>
 
     <div class="input-group" style="margin-top: 20px;">
       <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-envelope"></i></span>
       <input aria-describedby="basic-addon3" class="form-control" id="email" name="email"
-             ng-model="(userInstance.userAttributes | filter:{name:'email'})[0].data" placeholder="Email" readonly
+             ng-model="(userInstance.userAttributes | filter:{name:'email'})[0].data"
+             placeholder="{{'email' | translate}}" readonly
              type="text"/>
     </div>
 
     <div class="input-group" style="margin-top: 20px;">
       <span class="input-group-addon"
             style="border-right: 1px solid #ccc;"><i class="glyphicon glyphicon-check"></i></span>
-      <input style="margin-left: 5px" name="userStatus"
-             ng-model="userInstanceStatus" ng-change="changeStatus()" on-type="info" toggle-btn type="checkbox"/>
+      <input name="userStatus" ng-change="changeStatus()"
+             ng-model="userInstanceStatus" on-type="info" style="margin-left: 5px" toggle-btn type="checkbox"/>
     </div>
 
   </div>
   <div class="modal-footer">
-    <button class="btn btn-default pull-left" ng-click="cancel()" type="button"><em
-        class="glyphicon glyphicon-remove-sign"></em> Cancel</button>
-    <button class="btn btn-danger" ng-click="delete()" type="button"><em
-        class="glyphicon glyphicon-trash"></em> Delete</button>
-    <button class="btn btn-info" type="submit"><em
-        class="glyphicon glyphicon-floppy-save"></em> Save</button>
+    <button class="btn btn-default pull-left" ng-click="cancel()" type="button">
+      <em
+          class="glyphicon glyphicon-remove-sign"></em>
+      {{'cancel' | translate}}
+    </button>
+    <button class="btn btn-danger" ng-click="delete()" type="button">
+      <em
+          class="glyphicon glyphicon-trash"></em>
+      {{'delete' | translate}}
+    </button>
+    <button class="btn btn-info" ng-disabled="!forms.editUserForm.$dirty" type="submit">
+      <em
+          class="glyphicon glyphicon-floppy-save"></em>
+      {{'save' | translate}}
+    </button>
   </div>
 </form>

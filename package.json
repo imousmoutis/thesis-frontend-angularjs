@@ -32,12 +32,15 @@
     "angular-cookies": "^1.7.8",
     "angular-jwt": "^0.1.11",
     "angular-route": "^1.7.8",
+    "angular-sanitize": "^1.7.9",
+    "angular-translate": "^2.18.2",
     "angular-ui-bootstrap": "^2.5.6",
     "angular-ui-notification": "^0.3.6",
     "animatewithsass": "^3.2.1",
     "bootstrap-sass": "^3.4.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",
-    "ng-table": "^0.5.4"
+    "ng-table": "^0.5.4",
+    "ngstorage": "^0.3.11"
   }
 }

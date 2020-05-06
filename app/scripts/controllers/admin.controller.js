@@ -1,5 +1,11 @@
 app.controller('AdminController',
-    function ($scope, $rootScope, UserService, CONSTANTS, $location, ngTableParams, $uibModal, Notification) {
+    function ($scope, $rootScope, UserService, CONSTANTS, $location, ngTableParams, $uibModal, Notification, $filter,
+        $translate) {
+
+      $translate('admin')
+      .then(function (translatedValue) {
+        $rootScope.title = translatedValue;
+      });
 
       $scope.users = [];
       $scope.usersLength = 0;
@@ -73,13 +79,15 @@ app.controller('AdminController',
         };
 
         $scope.save = function () {
-          $scope.userInstance.status = $scope.userInstanceStatus ? 1 : 0;
-          UserService.saveUser($scope.userInstance)
-          .then(function (response) {
-            Notification.success({message: 'User successfully saved.'});
-            $uibModalInstance.close($scope.userInstance);
-          }, function (error) {
-          });
+          if ($scope.forms.editUserForm.$valid) {
+            $scope.userInstance.status = $scope.userInstanceStatus ? 1 : 0;
+            UserService.saveUser($scope.userInstance)
+            .then(function (response) {
+              Notification.success({message: $filter('translate')('saveUserSuccessful')});
+              $uibModalInstance.close($scope.userInstance);
+            }, function (error) {
+            });
+          }
         };
 
         $scope.delete = function () {
@@ -91,7 +99,7 @@ app.controller('AdminController',
             scope: $scope.$new(),
             resolve: {
               message: function () {
-                return "Are you sure you want to delete this user?";
+                return $filter('translate')('deleteUserConfirmation');
               }
             }
           });
@@ -101,7 +109,7 @@ app.controller('AdminController',
             if (response) {
               UserService.deleteUser($scope.userInstance.id)
               .then(function (response) {
-                Notification.success({message: 'User successfully deleted.'});
+                Notification.success({message: $filter('translate')('deleteUserSuccessful')});
                 $uibModalInstance.close($scope.userInstance);
               }, function (error) {
               });

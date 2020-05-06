@@ -11,7 +11,7 @@ app.factory('IndexService', function ($http, CONSTANTS, $cookies) {
       return $http.post(CONSTANTS.BASE + 'register/', user);
     },
     logout: function (user) {
-      return $http.delete(CONSTANTS.BASE + 'logout/',{
+      return $http.delete(CONSTANTS.BASE + 'logout/', {
         headers: {'Authorization': $cookies.get('jwt')}
       });
     },
