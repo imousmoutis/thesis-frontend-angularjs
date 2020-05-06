@@ -75,7 +75,7 @@ app.config(
       .preferredLanguage("en")
       .useLocalStorage()
       .useSanitizeValueStrategy("escaped")
-      .useUrlLoader(CONSTANTS.BASE + "lexicon/");
+      .useUrlLoader(CONSTANTS.BASE + "lexicon");
 
       $locationProvider.hashPrefix('');
 

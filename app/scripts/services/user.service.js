@@ -2,18 +2,18 @@ app.factory('UserService', function ($http, CONSTANTS, $localStorage) {
 
   return {
     getUserCount: function () {
-      return $http.get(CONSTANTS.BASE + 'user/count/', {
+      return $http.get(CONSTANTS.BASE + 'user/count', {
         headers: {'Authorization': $localStorage.jwt}
       });
     },
     getUsers: function (params) {
-      return $http.get(CONSTANTS.BASE + 'user/', {
+      return $http.get(CONSTANTS.BASE + 'user', {
         headers: {'Authorization': $localStorage.jwt},
         params: params
       });
     },
-    saveUser: function (user) {
-      return $http.post(CONSTANTS.BASE + 'user/', user, {
+    editUser: function (user) {
+      return $http.post(CONSTANTS.BASE + 'user', user, {
         headers: {'Authorization': $localStorage.jwt}
       });
     },

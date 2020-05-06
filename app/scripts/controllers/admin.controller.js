@@ -76,7 +76,7 @@ app.controller('AdminController',
         $scope.save = function () {
           if ($scope.forms.editUserForm.$valid) {
             $scope.userInstance.status = $scope.userInstanceStatus ? 1 : 0;
-            UserService.saveUser($scope.userInstance)
+            UserService.editUser($scope.userInstance)
             .then(function (response) {
               Notification.success({message: $filter('translate')('saveUserSuccessful')});
               $uibModalInstance.close($scope.userInstance);
