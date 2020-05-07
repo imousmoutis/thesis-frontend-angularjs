@@ -90,6 +90,16 @@ body {
   }
 }
 
+.navbar-nav {
+  margin: 0.5px -15px;
+}
+
+@media (max-width: 767px) {
+  .dropdown-menu {
+    padding: 0;
+  }
+}
+
 .footer {
   position: absolute;
   bottom: 0;
