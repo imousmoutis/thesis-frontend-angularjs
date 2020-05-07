@@ -4,6 +4,7 @@ app.controller('AdminController',
 
       $scope.users = [];
       $scope.usersLength = 0;
+      $scope.searchValue = '';
 
       UserService.getUserCount()
       .then(function (response) {
@@ -28,15 +29,22 @@ app.controller('AdminController',
               page: params.page() - 1,
               size: params.count(),
               sortColumn: column,
-              sortOrder: (order === '+') ? 'asc' : 'desc'
+              sortOrder: (order === '+') ? 'asc' : 'desc',
+              username: $scope.searchValue
             })
             .then(function (response) {
               $defer.resolve(response.data.content);
               $scope.usersLength = response.data.totalElements;
+              $scope.tableParams.total($scope.usersLength);
             });
           }
         });
       }
+
+      $scope.search = function(){
+        $scope.tableParams.page(1);
+        $scope.tableParams.reload();
+      };
 
       $scope.editUser = function (user, index) {
         var modalInstance = $uibModal.open({

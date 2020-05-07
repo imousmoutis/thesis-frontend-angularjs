@@ -2,7 +2,16 @@
 
 <h3>{{'adminPageHeading1' | translate}} {{usersLength}} {{'adminPageHeading2' | translate}}</h3>
 
+<div class="col-md-6 col-md-offset-6 col-sm-6 col-sm-offset-6">
+  <div class="form-group has-feedback has-search">
+    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+    <input type="text" class="form-control" placeholder="{{'searchUsersBox' | translate}}" ng-model="searchValue"
+           ng-change="search()"/>
+  </div>
+</div>
+
 <div ng-show="usersLength > 0">
+
   <table class="table table-bordered table-striped" ng-table="tableParams">
     <tr ng-repeat="user in $data">
       <td data-sortable="'username'" data-title="'username' | translate">
