@@ -63,6 +63,7 @@ app.controller('AdminController',
       var EditUserController = function (user, $uibModalInstance) {
         $scope.forms = {};
         $scope.userInstance = angular.copy(user);
+        $scope.initialUsername = angular.copy(user.username);
         $scope.userInstanceStatus = (user.status === 1);
 
         $scope.cancel = function () {

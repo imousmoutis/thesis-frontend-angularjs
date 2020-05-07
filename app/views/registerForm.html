@@ -12,11 +12,15 @@
            ng-class="{'has-error has-feedback': (forms.registerForm.username.$invalid  && (forms.registerForm.username.$dirty || forms.registerForm.$submitted))}">
         <span class="input-group-addon" id="basic-addon1"><em class="glyphicon glyphicon-user"></em></span>
         <input aria-describedby="basic-addon1" class="form-control" name="username" ng-model="user.username"
-               placeholder="{{'username' | translate}}" required/>
+               placeholder="{{'username' | translate}}" required data-unique-username="{initialUsername: ''}"/>
       </div>
       <div class="error-message"
-           ng-if="forms.registerForm.username.$invalid && (forms.registerForm.username.$dirty || forms.registerForm.$submitted)">
+           ng-if="forms.registerForm.username.$error.required && (forms.registerForm.username.$dirty || forms.registerForm.$submitted)">
         {{'usernameRequired' | translate}}
+      </div>
+      <div class="error-message"
+           ng-if="forms.registerForm.username.$error.unique && (forms.registerForm.username.$dirty || forms.registerForm.$submitted)">
+        {{'usernameExists' | translate}}
       </div>
     </div>
 

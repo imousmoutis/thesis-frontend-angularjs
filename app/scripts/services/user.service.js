@@ -21,6 +21,11 @@ app.factory('UserService', function ($http, CONSTANTS, $localStorage) {
       return $http.delete(CONSTANTS.BASE + 'user/' + userId, {
         headers: {'Authorization': $localStorage.jwt}
       });
+    },
+    uniqueUser: function (term) {
+      return $http.get(CONSTANTS.BASE + 'user/unique', {
+        params: {term: term}
+      });
     }
   };
 });

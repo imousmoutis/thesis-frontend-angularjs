@@ -43,7 +43,6 @@ app.controller('LoginController',
       };
 
       $scope.register = function () {
-
         if ($scope.forms.registerForm.$valid) {
           IndexService.register($scope.user)
           .then(function (response) {

@@ -10,11 +10,15 @@
            style="margin-top: 2px;">
         <span class="input-group-addon" id="basic-addon1"><em class="glyphicon glyphicon-user"></em></span>
         <input aria-describedby="basic-addon1" class="form-control" id="user" name="username"
-               ng-model="userInstance.username" placeholder="{{'username' | translate}}" required/>
+               ng-model="userInstance.username" placeholder="{{'username' | translate}}" required data-unique-username="{initialUsername: initialUsername}"/>
       </div>
       <div class="error-message"
-           ng-if="forms.editUserForm.username.$invalid && (forms.editUserForm.username.$dirty || forms.editUserForm.$submitted)">
+           ng-if="forms.editUserForm.username.$error.required && (forms.editUserForm.username.$dirty || forms.editUserForm.$submitted)">
         {{'usernameRequired' | translate}}
+      </div>
+      <div class="error-message"
+           ng-if="forms.editUserForm.username.$error.unique && (forms.editUserForm.username.$dirty || forms.editUserForm.$submitted)">
+        {{'usernameExists' | translate}}
       </div>
     </div>
 
