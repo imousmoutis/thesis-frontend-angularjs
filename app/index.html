@@ -4,9 +4,9 @@
 	<link rel="stylesheet" href="css/app.min.css">
 </head>
 <body>
-	<div ng-include src="'html/navbar.html'"></div>
-	<div class="container" ng-view></div>
-	<div ng-include src="'html/footer.html'"></div>
+	<div ng-hide="errorPage" ng-include src="'html/navbar.html'"></div>
+	<div ng-class="{container: !errorPage}" ng-view></div>
+	<div ng-hide="errorPage" ng-include src="'html/footer.html'"></div>
 
 	<script src="js/app.min.js"></script>
 </body>

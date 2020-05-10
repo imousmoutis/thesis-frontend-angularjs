@@ -36,7 +36,7 @@ app.run(function ($rootScope, $localStorage, jwtHelper, Notification, $filter, $
   });
 
   $rootScope.$on('$routeChangeStart', function () {
-   updateTitle();
+    updateTitle();
   });
 
   updateTitle = function () {
@@ -48,6 +48,8 @@ app.run(function ($rootScope, $localStorage, jwtHelper, Notification, $filter, $
       $rootScope.title = $filter('translate')('admin');
     } else if ($location.path() === '/dashboard') {
       $rootScope.title = $filter('translate')('dashboard');
+    } else {
+      $rootScope.title = $filter('translate')('404');
     }
   }
 });
@@ -87,6 +89,7 @@ app.config(
         controller: 'HomeController',
         resolve: {
           app: function ($rootScope) {
+            $rootScope.errorPage = false;
             $rootScope.activePage = 1;
           }
         }
@@ -101,6 +104,7 @@ app.config(
             if ($rootScope.userIsLogged) {
               $location.path('/dashboard');
             } else {
+              $rootScope.errorPage = false;
               $rootScope.activePage = 2;
             }
 
@@ -119,6 +123,7 @@ app.config(
             if (!$rootScope.userIsLogged) {
               $location.path('/');
             } else {
+              $rootScope.errorPage = false;
               $rootScope.activePage = 3;
             }
 
@@ -137,6 +142,7 @@ app.config(
             if (!$rootScope.userIsLogged) {
               $location.path('/');
             } else {
+              $rootScope.errorPage = false;
               $rootScope.activePage = 4;
             }
 
@@ -145,7 +151,10 @@ app.config(
           }
         }
       })
-      .otherwise({redirectTo: '/'});
+      .otherwise({
+        templateUrl: 'html/404.html',
+        controller: 'ErrorController'
+      });
 
       NotificationProvider.setOptions({
         delay: 10000,
