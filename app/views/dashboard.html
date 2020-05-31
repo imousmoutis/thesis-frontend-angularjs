@@ -1,1 +1,81 @@
-HEY
+<h2>{{'greeting' | translate}}, {{loggedUser}}!</h2>
+<h4>{{'dashboardHeader' | translate}}</h4>
+<br/>
+
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a href="#summary" data-toggle="tab" ng-click="$event.preventDefault()">{{'overview' | translate}}</a>
+  </li>
+  <li>
+    <a href="#feed" data-toggle="tab" ng-click="$event.preventDefault()">{{'expensesFeed' | translate}}</a>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="summary">
+    <br/>
+    <form class="form-horizontal" id="form" name="forms.expensesForm"
+          ng-submit="submitExpense()" novalidate>
+
+      <div>
+        <div class="input-group"
+             ng-class="{'has-error has-feedback': (forms.expensesForm.amount.$invalid  && (forms.expensesForm.amount.$dirty || forms.expensesForm.$submitted))}">
+          <span class="input-group-addon" id="basic-addon1"><em class="glyphicon glyphicon-euro"></em></span>
+          <input aria-describedby="basic-addon1" class="form-control" name="amount" ng-model="expense.amount"
+                 placeholder="{{'amount' | translate}}" type="number" required/>
+        </div>
+        <div class="error-message"
+             ng-if="forms.expensesForm.amount.$error.required && (forms.expensesForm.amount.$dirty || forms.expensesForm.$submitted)">
+          {{'amountRequired' | translate}}
+        </div>
+      </div>
+
+      <div>
+        <div class="input-group"
+             ng-class="{'has-error has-feedback': (forms.expensesForm.date.$invalid  && (forms.expensesForm.date.$dirty || forms.expensesForm.$submitted))}">
+          <span class="input-group-btn" id="basic-addon2">
+            <button type="button" class="btn btn-flat" ng-click="datePickerOpened = true;"><i
+                class="glyphicon glyphicon-calendar"></i>
+            </button>
+          </span>
+          <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="expense.date"
+                 is-open="datePickerOpened" datepicker-options="dateOptions" close-text="Close"
+                 alt-input-formats="altInputFormats" disabled required/>
+        </div>
+      </div>
+
+      <div>
+        <div class="input-group"
+             ng-class="{'has-error has-feedback': (forms.expensesForm.category.$invalid  && (forms.expensesForm.category.$dirty || forms.expensesForm.$submitted))}">
+          <span class="input-group-addon" id="basic-addon3"><em class="glyphicon glyphicon-info-sign"></em></span>
+          <select aria-describedby="basic-addon3" class="form-control" name="category" ng-model="expense.category"
+                  required>
+            <option value="" disabled>{{'category' | translate}}</option>
+            <option ng-repeat="cat in expenseCategories"
+                    value="{{cat.id}}">{{cat.name | translate}}
+            </option>
+          </select>
+        </div>
+        <div class="error-message"
+             ng-if="forms.expensesForm.category.$error.required && (forms.expensesForm.category.$dirty || forms.expensesForm.$submitted)">
+          {{'categoryRequired' | translate}}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-12">
+          <button class="btn btn-primary pull-left" type="submit">
+            <em class="glyphicon glyphicon-floppy-save"></em>
+            {{'submitExpense' | translate}}
+          </button>
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+  <div class="tab-pane" id="feed">
+    <h4>Notice the gap between the content and tab after applying a background color</h4>
+  </div>
+</div>
+

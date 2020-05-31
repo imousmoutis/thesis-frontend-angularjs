@@ -76,11 +76,11 @@ body {
   }
 }
 
-.active > a {
+.navbar-default .active > a {
   color: yellow !important;
 }
 
-.dropdown-menu {
+.navbar-default .dropdown-menu {
   background-color: $background_color_1 !important;
   border: 1px solid transparent;
 
@@ -557,4 +557,15 @@ body::-webkit-scrollbar-thumb {
   margin-left: auto;
   border-radius: 50%;
   animation: floatingShadow 3s ease-in-out infinite;
+}
+
+.input-group-btn {
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-right: 0;
+}
+
+.btn:focus, .btn:active, .btn:hover{
+  box-shadow: none!important;
+  outline: 0;
 }
