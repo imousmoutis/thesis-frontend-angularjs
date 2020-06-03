@@ -5,7 +5,8 @@ app.controller('DashboardController',
       $scope.expense = {
         amount: '',
         category: '',
-        date: new Date()
+        date: new Date(),
+        description: ''
       };
 
       $scope.dateFormat = 'dd.MM.yyyy';
@@ -22,10 +23,10 @@ app.controller('DashboardController',
 
       $scope.submitExpense = function () {
         if ($scope.forms.expensesForm.$valid) {
-          console.log($scope.expense);
+          ExpenseService.saveExpense($scope.expense).then(function (response) {
+            console.log(response);
+          });
         }
       };
-
-
 
     });
