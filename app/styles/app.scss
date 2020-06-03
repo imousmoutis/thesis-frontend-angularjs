@@ -10,6 +10,10 @@ $booShadow: darken($booBg, 5%);
 $booFaceSize: round($jaggedDistance / 1.3333);
 $booFaceColor: #9b9b9b;
 
+*:focus {
+  outline: none;
+}
+
 html {
   position: relative;
   min-height: 100%;
@@ -565,7 +569,49 @@ body::-webkit-scrollbar-thumb {
   border-right: 0;
 }
 
-.btn:focus, .btn:active, .btn:hover{
-  box-shadow: none!important;
-  outline: 0;
+
+.uib-datepicker-popup {
+  z-index: 9999;
+
+  .glyphicon {
+    top: 0.5px;
+    line-height: 1.5;
+  }
+
+  .uib-daypicker {
+    border: 0;
+  }
 }
+
+
+.input-group-btn {
+  border-radius: 4px 0 0 4px;
+}
+
+.btn-date {
+  border: 0;
+  background: transparent;
+}
+
+.btn-date.active.focus, .btn-date.active:focus,
+.btn-date.focus, .btn-date:active.focus,
+.btn-date:active:focus, .btn-date:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
+
+[uib-datepicker-popup][required] + [uib-datepicker-popup-wrap] button[ng-click*="select(null"] {
+  display: none;
+}
+
+.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.uib-datepicker {
+  padding: 5px 5px 0 4px;
+}
+
+

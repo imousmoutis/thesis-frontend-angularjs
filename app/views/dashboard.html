@@ -34,13 +34,15 @@
         <div class="input-group"
              ng-class="{'has-error has-feedback': (forms.expensesForm.date.$invalid  && (forms.expensesForm.date.$dirty || forms.expensesForm.$submitted))}">
           <span class="input-group-btn" id="basic-addon2">
-            <button type="button" class="btn btn-flat" ng-click="datePickerOpened = true;"><i
-                class="glyphicon glyphicon-calendar"></i>
+            <button type="button" class="btn btn-flat btn-date" ng-click="datePickerOpened = true;"><em
+                class="glyphicon glyphicon-calendar"></em>
             </button>
           </span>
           <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="expense.date"
-                 is-open="datePickerOpened" datepicker-options="dateOptions" close-text="Close"
-                 alt-input-formats="altInputFormats" disabled required/>
+                 is-open="datePickerOpened" datepicker-options="dateOptions"
+                 alt-input-formats="altInputFormats" ng-readonly="true" current-text="{{'today' | translate}}"
+                 close-text="{{'close' | translate}}"
+                 required/>
         </div>
       </div>
 

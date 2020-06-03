@@ -1,5 +1,6 @@
 app.controller('NavbarController',
-    function ($rootScope, $location, $scope, jwtHelper, IndexService, CONSTANTS, $translate, LexiconService, $localStorage) {
+    function ($rootScope, $location, $scope, jwtHelper, IndexService, CONSTANTS, $translate, LexiconService,
+        $localStorage) {
 
       $scope.CONSTANTS = CONSTANTS;
 
