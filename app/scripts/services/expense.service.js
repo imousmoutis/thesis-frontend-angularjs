@@ -11,8 +11,8 @@ app.factory('ExpenseService', function ($http, CONSTANTS, $localStorage) {
         headers: {'Authorization': $localStorage.jwt}
       });
     },
-    getUserExpenses: function (from, to) {
-      return $http.get(CONSTANTS.BASE + 'expense', {
+    getUserTotalExpenses: function (from, to) {
+      return $http.get(CONSTANTS.BASE + 'expense/total', {
         headers: {'Authorization': $localStorage.jwt},
         params: {from: from, to: to}
       });

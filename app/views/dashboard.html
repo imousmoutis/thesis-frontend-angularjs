@@ -13,15 +13,50 @@
     <a href="#new" data-toggle="tab" ng-click="$event.preventDefault()">{{'newExpense' | translate}}</a>
   </li>
 </ul>
-</ul>
-
 
 <div class="tab-content">
-  <div class="tab-pane active" id="summary">
+  <div class="tab-pane container active" id="summary">
 
-    heh
+    <div class="row">
+      <h5>{{'selectTimeRange' | translate}}</h5>
+      <div class="col-md-6">
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-flat btn-date" ng-click="datePickerFromOpened = true;"><em
+                class="glyphicon glyphicon-calendar"></em>
+            </button>
+          </span>
+          <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="dateFrom"
+                 is-open="datePickerFromOpened" datepicker-options="dateFromOptions"
+                 alt-input-formats="altInputFormats" ng-readonly="true" current-text="{{'today' | translate}}"
+                 close-text="{{'close' | translate}}" ng-change="setToDatepickerMinDate(); loadTotalExpenses()"
+                 required/>
+        </div>
+      </div>
 
+      <div class="col-md-6">
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-flat btn-date" ng-click="datePickerToOpened = true;"><em
+                class="glyphicon glyphicon-calendar"></em>
+            </button>
+          </span>
+          <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="dateTo"
+                 is-open="datePickerToOpened" datepicker-options="dateToOptions"
+                 alt-input-formats="altInputFormats" ng-readonly="true" current-text="{{'today' | translate}}"
+                 close-text="{{'close' | translate}}" ng-change="setFromDatepickerMaxDate(); loadTotalExpenses()"
+                 required/>
+        </div>
+      </div>
+    </div>
+    <br/>
+
+    <canvas id="line" class="chart chart-line" chart-data="expensesData"
+            chart-labels="expensesDates" chart-series="chartCategories" chart-options="options"
+            chart-dataset-override="datasetOverride" chart-click="onClick">
+    </canvas>
   </div>
+
   <div class="tab-pane" id="feed">
     <h4>Notice the gap between the content and tab after applying a background color</h4>
   </div>
@@ -44,20 +79,18 @@
         </div>
       </div>
 
-      <div>
-        <div class="input-group"
-             ng-class="{'has-error has-feedback': (forms.expensesForm.date.$invalid  && (forms.expensesForm.date.$dirty || forms.expensesForm.$submitted))}">
+      <div class="input-group"
+           ng-class="{'has-error has-feedback': (forms.expensesForm.date.$invalid  && (forms.expensesForm.date.$dirty || forms.expensesForm.$submitted))}">
           <span class="input-group-btn" id="basic-addon2">
             <button type="button" class="btn btn-flat btn-date" ng-click="datePickerOpened = true;"><em
                 class="glyphicon glyphicon-calendar"></em>
             </button>
           </span>
-          <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="expense.date"
-                 is-open="datePickerOpened" datepicker-options="dateOptions"
-                 alt-input-formats="altInputFormats" ng-readonly="true" current-text="{{'today' | translate}}"
-                 close-text="{{'close' | translate}}"
-                 required/>
-        </div>
+        <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="expense.date"
+               is-open="datePickerOpened" datepicker-options="dateOptions"
+               alt-input-formats="altInputFormats" ng-readonly="true" current-text="{{'today' | translate}}"
+               close-text="{{'close' | translate}}"
+               required/>
       </div>
 
       <div>
