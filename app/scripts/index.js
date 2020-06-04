@@ -1,6 +1,6 @@
 var app = angular.module('ThesisApp',
     ['ngRoute', 'ngAnimate', 'ngTable', 'angular-jwt', 'ui.bootstrap',
-      'ui-notification', 'pascalprecht.translate', 'ngStorage', 'ngCookies', 'ngSanitize']);
+      'ui-notification', 'pascalprecht.translate', 'ngStorage', 'ngCookies', 'ngSanitize', 'chart.js']);
 
 app.constant('CONSTANTS', {
   BASE: 'http://localhost:8080/thesis/api/',

@@ -9,10 +9,24 @@
   <li>
     <a href="#feed" data-toggle="tab" ng-click="$event.preventDefault()">{{'expensesFeed' | translate}}</a>
   </li>
+  <li>
+    <a href="#new" data-toggle="tab" ng-click="$event.preventDefault()">{{'newExpense' | translate}}</a>
+  </li>
 </ul>
+</ul>
+
 
 <div class="tab-content">
   <div class="tab-pane active" id="summary">
+
+    heh
+
+  </div>
+  <div class="tab-pane" id="feed">
+    <h4>Notice the gap between the content and tab after applying a background color</h4>
+  </div>
+
+  <div class="tab-pane" id="new">
     <br/>
     <form class="form-horizontal" id="form" name="forms.expensesForm"
           ng-submit="submitExpense()" novalidate>
@@ -79,11 +93,6 @@
         </div>
       </div>
     </form>
-
-
-  </div>
-  <div class="tab-pane" id="feed">
-    <h4>Notice the gap between the content and tab after applying a background color</h4>
   </div>
 </div>
 
