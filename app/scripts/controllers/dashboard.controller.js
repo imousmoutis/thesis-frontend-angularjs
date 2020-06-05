@@ -27,6 +27,10 @@ app.controller('DashboardController',
         startingDay: 1
       };
 
+      $scope.expensesData = [];
+
+      $scope.selectedGraph = 'line';
+
       $scope.setFromDatepickerMaxDate = function () {
         $scope.dateFromOptions.maxDate = $scope.dateTo;
       };

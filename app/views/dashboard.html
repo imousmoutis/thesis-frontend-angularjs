@@ -18,7 +18,12 @@
   <div class="tab-pane container active" id="summary">
 
     <div class="row">
-      <h5>{{'selectTimeRange' | translate}}</h5>
+      <div class="col-md-12">
+        <h5>{{'selectTimeRange' | translate}}</h5>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-md-6">
         <div class="input-group">
           <span class="input-group-btn">
@@ -49,83 +54,113 @@
         </div>
       </div>
     </div>
-    <br/>
 
-    <canvas id="line" class="chart chart-line" chart-data="expensesData"
-            chart-labels="expensesDates" chart-series="chartCategories" chart-options="options"
-            chart-dataset-override="datasetOverride" chart-click="onClick">
-    </canvas>
+    <hr/>
+
+    <div class="alert alert-danger" role="alert" ng-hide="expensesDates.length > 0">
+      {{'noExpensesFound' | translate}}
+    </div>
+
+    <div ng-if="expensesDates.length > 0">
+      <form class="text-center">
+        <label class="radio-inline">
+          <input type="radio" name="optradio" ng-model="selectedGraph" value="line">
+          {{'lineChart' | translate}}
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="optradio" ng-model="selectedGraph" value="bar">
+          {{'barChart' | translate}}
+        </label>
+      </form>
+
+      <canvas ng-if="selectedGraph == 'line'" id="line" class="chart chart-line" chart-data="expensesData"
+              chart-labels="expensesDates" chart-series="chartCategories" chart-options="options"
+              chart-dataset-override="datasetOverride">
+      </canvas>
+
+      <canvas ng-if="selectedGraph == 'bar'" id="base" class="chart-horizontal-bar" chart-data="expensesData"
+              chart-labels="expensesDates" chart-series="chartCategories">
+      </canvas>
+
+
+    </div>
   </div>
 
   <div class="tab-pane" id="feed">
     <h4>Notice the gap between the content and tab after applying a background color</h4>
   </div>
 
-  <div class="tab-pane" id="new">
+  <div class="tab-pane container" id="new">
     <br/>
-    <form class="form-horizontal" id="form" name="forms.expensesForm"
-          ng-submit="submitExpense()" novalidate>
+    <div class="row">
+      <div class="col-md-12">
 
-      <div>
-        <div class="input-group"
-             ng-class="{'has-error has-feedback': (forms.expensesForm.amount.$invalid  && (forms.expensesForm.amount.$dirty || forms.expensesForm.$submitted))}">
-          <span class="input-group-addon" id="basic-addon1"><em class="glyphicon glyphicon-euro"></em></span>
-          <input aria-describedby="basic-addon1" class="form-control" name="amount" ng-model="expense.amount"
-                 placeholder="{{'amount' | translate}}" type="number" required/>
-        </div>
-        <div class="error-message"
-             ng-if="forms.expensesForm.amount.$error.required && (forms.expensesForm.amount.$dirty || forms.expensesForm.$submitted)">
-          {{'amountRequired' | translate}}
-        </div>
-      </div>
+        <form class="form-horizontal" id="form" name="forms.expensesForm"
+              ng-submit="submitExpense()" novalidate>
 
-      <div class="input-group"
-           ng-class="{'has-error has-feedback': (forms.expensesForm.date.$invalid  && (forms.expensesForm.date.$dirty || forms.expensesForm.$submitted))}">
+          <div>
+            <div class="input-group"
+                 ng-class="{'has-error has-feedback': (forms.expensesForm.amount.$invalid  && (forms.expensesForm.amount.$dirty || forms.expensesForm.$submitted))}">
+              <span class="input-group-addon" id="basic-addon1"><em class="glyphicon glyphicon-euro"></em></span>
+              <input aria-describedby="basic-addon1" class="form-control" name="amount" ng-model="expense.amount"
+                     placeholder="{{'amount' | translate}}" type="number" required/>
+            </div>
+            <div class="error-message"
+                 ng-if="forms.expensesForm.amount.$error.required && (forms.expensesForm.amount.$dirty || forms.expensesForm.$submitted)">
+              {{'amountRequired' | translate}}
+            </div>
+          </div>
+
+          <div class="input-group"
+               ng-class="{'has-error has-feedback': (forms.expensesForm.date.$invalid  && (forms.expensesForm.date.$dirty || forms.expensesForm.$submitted))}">
           <span class="input-group-btn" id="basic-addon2">
             <button type="button" class="btn btn-flat btn-date" ng-click="datePickerOpened = true;"><em
                 class="glyphicon glyphicon-calendar"></em>
             </button>
           </span>
-        <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="expense.date"
-               is-open="datePickerOpened" datepicker-options="dateOptions"
-               alt-input-formats="altInputFormats" ng-readonly="true" current-text="{{'today' | translate}}"
-               close-text="{{'close' | translate}}"
-               required/>
-      </div>
+            <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="expense.date"
+                   is-open="datePickerOpened" datepicker-options="dateOptions"
+                   alt-input-formats="altInputFormats" ng-readonly="true" current-text="{{'today' | translate}}"
+                   close-text="{{'close' | translate}}"
+                   required/>
+          </div>
 
-      <div>
-        <div class="input-group"
-             ng-class="{'has-error has-feedback': (forms.expensesForm.category.$invalid  && (forms.expensesForm.category.$dirty || forms.expensesForm.$submitted))}">
-          <span class="input-group-addon" id="basic-addon3"><em class="glyphicon glyphicon-info-sign"></em></span>
-          <select aria-describedby="basic-addon3" class="form-control" name="category" ng-model="expense.category"
-                  required>
-            <option value="" disabled>{{'category' | translate}}</option>
-            <option ng-repeat="cat in expenseCategories"
-                    value="{{cat.id}}">{{cat.name | translate}}
-            </option>
-          </select>
-        </div>
-        <div class="error-message"
-             ng-if="forms.expensesForm.category.$error.required && (forms.expensesForm.category.$dirty || forms.expensesForm.$submitted)">
-          {{'categoryRequired' | translate}}
-        </div>
-      </div>
+          <div>
+            <div class="input-group"
+                 ng-class="{'has-error has-feedback': (forms.expensesForm.category.$invalid  && (forms.expensesForm.category.$dirty || forms.expensesForm.$submitted))}">
+              <span class="input-group-addon" id="basic-addon3"><em class="glyphicon glyphicon-info-sign"></em></span>
+              <select aria-describedby="basic-addon3" class="form-control" name="category" ng-model="expense.category"
+                      required>
+                <option value="" disabled>{{'category' | translate}}</option>
+                <option ng-repeat="cat in expenseCategories"
+                        value="{{cat.id}}">{{cat.name | translate}}
+                </option>
+              </select>
+            </div>
+            <div class="error-message"
+                 ng-if="forms.expensesForm.category.$error.required && (forms.expensesForm.category.$dirty || forms.expensesForm.$submitted)">
+              {{'categoryRequired' | translate}}
+            </div>
+          </div>
 
-      <div class="input-group">
-        <span class="input-group-addon" id="basic-addon4"><em class="glyphicon glyphicon-book"></em></span>
-        <textarea aria-describedby="basic-addon4" class="form-control" rows="3"
-                  ng-model="expense.description"></textarea>
-      </div>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon4"><em class="glyphicon glyphicon-book"></em></span>
+            <textarea aria-describedby="basic-addon4" class="form-control" rows="3"
+                      ng-model="expense.description"></textarea>
+          </div>
 
-      <div class="form-group">
-        <div class="col-sm-12">
-          <button class="btn btn-primary pull-left" type="submit">
-            <em class="glyphicon glyphicon-floppy-save"></em>
-            {{'submitExpense' | translate}}
-          </button>
-        </div>
+          <div class="form-group">
+            <div class="col-sm-12">
+              <button class="btn btn-primary pull-left" type="submit">
+                <em class="glyphicon glyphicon-floppy-save"></em>
+                {{'submitExpense' | translate}}
+              </button>
+            </div>
+          </div>
+        </form>
+
       </div>
-    </form>
+    </div>
   </div>
 </div>
 
