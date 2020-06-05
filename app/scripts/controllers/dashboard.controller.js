@@ -95,10 +95,15 @@ app.controller('DashboardController',
 
       $scope.submitExpense = function () {
         if ($scope.forms.expensesForm.$valid) {
-          $scope.expense.date = $filter('date')($scope.expense.date, $scope.dateFormat);
-          ExpenseService.saveExpense($scope.expense).then(function (response) {
+          ExpenseService.saveExpense({
+            amount: $scope.expense.amount,
+            category: $scope.expense.category,
+            date: $filter('date')($scope.expense.date, $scope.dateFormat),
+            description: $scope.expense.description
+          }).then(function (response) {
             $scope.forms.expensesForm.$setUntouched();
             $scope.forms.expensesForm.$setPristine();
+            $scope.loadTotalExpenses();
             initNewExpense();
             Notification.success({message: $filter('translate')('newExpenseSuccessful')});
           });
