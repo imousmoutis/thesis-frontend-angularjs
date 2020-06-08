@@ -1,35 +1,72 @@
 app.controller('DashboardController',
     function ($scope, $rootScope, ExpenseService, Notification, $filter) {
 
-      $scope.forms = {};
+      function initVariables() {
+        $scope.forms = {};
 
-      $scope.today = new Date();
-      $scope.dateFrom = angular.copy($scope.today);
-      $scope.dateTo = angular.copy($scope.today);
+        $scope.today = new Date();
+        $scope.dateFrom = angular.copy($scope.today);
+        $scope.dateTo = angular.copy($scope.today);
 
-      $scope.dateFormat = 'dd/MM/yyyy';
-      $scope.dateOptions = {
-        formatYear: 'yy',
-        maxDate: $scope.dateTo,
-        startingDay: 1
-      };
+        $scope.dateFormat = 'dd/MM/yyyy';
+        $scope.dateOptions = {
+          formatYear: 'yy',
+          maxDate: $scope.dateTo,
+          startingDay: 1
+        };
 
-      $scope.dateFromOptions = {
-        formatYear: 'yy',
-        maxDate: $scope.dateTo,
-        startingDay: 1
-      };
+        $scope.dateFromOptions = {
+          formatYear: 'yy',
+          maxDate: $scope.dateTo,
+          startingDay: 1
+        };
 
-      $scope.dateToOptions = {
-        formatYear: 'yy',
-        maxDate: angular.copy($scope.today),
-        minDate: $scope.dateFrom,
-        startingDay: 1
-      };
+        $scope.dateToOptions = {
+          formatYear: 'yy',
+          maxDate: angular.copy($scope.today),
+          minDate: $scope.dateFrom,
+          startingDay: 1
+        };
 
-      $scope.expensesData = [];
+        $scope.expensesData = [];
 
-      $scope.selectedGraph = 'line';
+        $scope.selectedGraph = 'line';
+
+        $scope.datasetOverride = [{yAxisID: 'y-axis-1'}];
+        $scope.options = {
+          scales: {
+            yAxes: [
+              {
+                id: 'y-axis-1',
+                type: 'linear',
+                display: true,
+                position: 'left'
+              }
+            ]
+          }
+        };
+
+        $scope.selectedPage = 0;
+        $scope.pageSize = 15;
+
+        $scope.totalExpensesSize = 0;
+        $scope.totalExpensesData = [];
+
+        initNewExpense();
+        $scope.loadTotalExpenses();
+        $scope.loadUserExpenses();
+      }
+
+      $scope.groups = [
+        {
+          title: 'Dynamic Group Header - 1',
+          content: 'Dynamic Group Body - 1'
+        },
+        {
+          title: 'Dynamic Group Header - 2',
+          content: 'Dynamic Group Body - 2'
+        }
+      ];
 
       $scope.setFromDatepickerMaxDate = function () {
         $scope.dateFromOptions.maxDate = $scope.dateTo;
@@ -48,8 +85,6 @@ app.controller('DashboardController',
         });
       };
 
-      $scope.loadTotalExpenses();
-
       function initNewExpense() {
         $scope.expense = {
           amount: '',
@@ -59,7 +94,22 @@ app.controller('DashboardController',
         };
       }
 
-      initNewExpense();
+      $scope.loadUserExpenses = function () {
+        ExpenseService.getUserExpenses({page: $scope.selectedPage, size: $scope.pageSize})
+        .then(function (response) {
+          $scope.totalExpensesSize = response.data.size;
+          $scope.totalExpensesData = response.data.results;
+          generateExpensesPagination();
+        });
+      };
+
+      function generateExpensesPagination() {
+        $scope.expensesPaginatedPages = [];
+        for (var i = 0; i < Math.ceil($scope.totalExpensesSize / $scope.pageSize); i++) {
+          $scope.expensesPaginatedPages.push(i + 1);
+        }
+        console.log($scope.expensesPaginatedPages);
+      }
 
       ExpenseService.getExpenseCategories()
       .then(function (response) {
@@ -71,27 +121,12 @@ app.controller('DashboardController',
         $scope.chartCategories = [];
         angular.forEach($scope.expenseCategories, function (category) {
           $scope.chartCategories.push($filter('translate')(category.name));
-          console.log($scope.chartCategories);
         });
       }
 
       $rootScope.$on('$translateChangeSuccess', function () {
         loadCategoryLabels();
       });
-
-      $scope.datasetOverride = [{yAxisID: 'y-axis-1'}];
-      $scope.options = {
-        scales: {
-          yAxes: [
-            {
-              id: 'y-axis-1',
-              type: 'linear',
-              display: true,
-              position: 'left'
-            }
-          ]
-        }
-      };
 
       $scope.submitExpense = function () {
         if ($scope.forms.expensesForm.$valid) {
@@ -109,5 +144,15 @@ app.controller('DashboardController',
           });
         }
       };
+
+      $scope.getTranslatedCategory = function (id) {
+        return $filter('translate')($filter('filter')($scope.expenseCategories, {id: id})[0].name);
+      };
+
+      $scope.updateExpense = function (expense) {
+        console.log(expense);
+      };
+
+      initVariables();
 
     });

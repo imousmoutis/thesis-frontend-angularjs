@@ -16,6 +16,12 @@ app.factory('ExpenseService', function ($http, CONSTANTS, $localStorage) {
         headers: {'Authorization': $localStorage.jwt},
         params: {from: from, to: to}
       });
-    }
+    },
+    getUserExpenses: function (params) {
+      return $http.get(CONSTANTS.BASE + 'expense', {
+        headers: {'Authorization': $localStorage.jwt},
+        params: params
+      });
+    },
   };
 });

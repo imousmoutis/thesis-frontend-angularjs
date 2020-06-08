@@ -17,45 +17,41 @@
 <div class="tab-content">
   <div class="tab-pane container active" id="summary">
 
-    <div class="row">
-      <div class="col-md-12">
-        <h5>{{'selectTimeRange' | translate}}</h5>
-      </div>
-    </div>
+    <div class="bs-callout bs-callout-warning" id="callout-btn-group-anchor-btn">
+      <h4>{{'selectTimeRange' | translate}}</h4>
 
-    <div class="row">
-      <div class="col-md-6">
-        <div class="input-group">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
           <span class="input-group-btn">
             <button type="button" class="btn btn-flat btn-date" ng-click="datePickerFromOpened = true;"><em
                 class="glyphicon glyphicon-calendar"></em>
             </button>
           </span>
-          <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="dateFrom"
-                 is-open="datePickerFromOpened" datepicker-options="dateFromOptions"
-                 alt-input-formats="altInputFormats" ng-readonly="true" current-text="{{'today' | translate}}"
-                 close-text="{{'close' | translate}}" ng-change="setToDatepickerMinDate(); loadTotalExpenses()"
-                 required/>
+            <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="dateFrom"
+                   is-open="datePickerFromOpened" datepicker-options="dateFromOptions"
+                   alt-input-formats="altInputFormats" ng-readonly="true" current-text="{{'today' | translate}}"
+                   close-text="{{'close' | translate}}" ng-change="setToDatepickerMinDate(); loadTotalExpenses()"
+                   required/>
+          </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
-        <div class="input-group">
+        <div class="col-md-6">
+          <div class="input-group">
           <span class="input-group-btn">
             <button type="button" class="btn btn-flat btn-date" ng-click="datePickerToOpened = true;"><em
                 class="glyphicon glyphicon-calendar"></em>
             </button>
           </span>
-          <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="dateTo"
-                 is-open="datePickerToOpened" datepicker-options="dateToOptions"
-                 alt-input-formats="altInputFormats" ng-readonly="true" current-text="{{'today' | translate}}"
-                 close-text="{{'close' | translate}}" ng-change="setFromDatepickerMaxDate(); loadTotalExpenses()"
-                 required/>
+            <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="dateTo"
+                   is-open="datePickerToOpened" datepicker-options="dateToOptions"
+                   alt-input-formats="altInputFormats" ng-readonly="true" current-text="{{'today' | translate}}"
+                   close-text="{{'close' | translate}}" ng-change="setFromDatepickerMaxDate(); loadTotalExpenses()"
+                   required/>
+          </div>
         </div>
       </div>
     </div>
-
-    <hr/>
 
     <div class="alert alert-danger" role="alert" ng-hide="expensesDates.length > 0">
       {{'noExpensesFound' | translate}}
@@ -77,90 +73,168 @@
               chart-labels="expensesDates" chart-series="chartCategories" chart-options="options"
               chart-dataset-override="datasetOverride">
       </canvas>
-
       <canvas ng-if="selectedGraph == 'bar'" id="base" class="chart-horizontal-bar" chart-data="expensesData"
               chart-labels="expensesDates" chart-series="chartCategories">
       </canvas>
-
-
     </div>
   </div>
 
-  <div class="tab-pane" id="feed">
-    <h4>Notice the gap between the content and tab after applying a background color</h4>
-  </div>
-
-  <div class="tab-pane container" id="new">
+  <div class="tab-pane container" id="feed">
     <br/>
-    <div class="row">
-      <div class="col-md-12">
+    <div class="alert alert-info" role="alert">
+      {{'totalExpensesHeader1' | translate}} {{totalExpensesSize}} {{'totalExpensesHeader2' | translate}}
+    </div>
 
-        <form class="form-horizontal" id="form" name="forms.expensesForm"
-              ng-submit="submitExpense()" novalidate>
+    <uib-accordion close-others="true">
+      <div uib-accordion-group class="panel-default" ng-repeat="e in totalExpensesData" is-open="group.open">
+        <uib-accordion-heading>
+          {{e.amount}}
+          <i class="glyphicon glyphicon-eur"></i>
+          {{'for' | translate}}
+          {{getTranslatedCategory(e.category)}} ({{e.date}})
+          <em class="pull-right glyphicon"
+             ng-class="{'glyphicon-chevron-down': group.open, 'glyphicon-chevron-right': !group.open}"></em>
+        </uib-accordion-heading>
 
-          <div>
+        <form class="form-horizontal" id="tessera" name="forms.expensesForm1" ng-submit="updateExpense(e)" novalidate>
+          <div class="form-custom-padding">
             <div class="input-group"
-                 ng-class="{'has-error has-feedback': (forms.expensesForm.amount.$invalid  && (forms.expensesForm.amount.$dirty || forms.expensesForm.$submitted))}">
+                 ng-class="{'has-error has-feedback': (forms.expensesForm1.amount.$invalid  && (forms.expensesForm1.amount.$dirty || forms.expensesForm1.$submitted))}">
               <span class="input-group-addon" id="basic-addon1"><em class="glyphicon glyphicon-euro"></em></span>
-              <input aria-describedby="basic-addon1" class="form-control" name="amount" ng-model="expense.amount"
+              <input aria-describedby="basic-addon1" class="form-control" name="amount" ng-model="e.amount"
                      placeholder="{{'amount' | translate}}" type="number" required/>
             </div>
             <div class="error-message"
-                 ng-if="forms.expensesForm.amount.$error.required && (forms.expensesForm.amount.$dirty || forms.expensesForm.$submitted)">
+                 ng-if="forms.expensesForm1.amount.$error.required && (forms.expensesForm.amount.$dirty || forms.expensesForm.$submitted)">
               {{'amountRequired' | translate}}
             </div>
           </div>
 
-          <div class="input-group"
-               ng-class="{'has-error has-feedback': (forms.expensesForm.date.$invalid  && (forms.expensesForm.date.$dirty || forms.expensesForm.$submitted))}">
-          <span class="input-group-btn" id="basic-addon2">
-            <button type="button" class="btn btn-flat btn-date" ng-click="datePickerOpened = true;"><em
-                class="glyphicon glyphicon-calendar"></em>
-            </button>
-          </span>
-            <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="expense.date"
-                   is-open="datePickerOpened" datepicker-options="dateOptions"
-                   alt-input-formats="altInputFormats" ng-readonly="true" current-text="{{'today' | translate}}"
-                   close-text="{{'close' | translate}}"
-                   required/>
+          <div class="input-group form-custom-padding">
+            <span class="input-group-addon" id="basic-addon3"><em class="glyphicon glyphicon-info-sign"></em></span>
+            <select aria-describedby="basic-addon3" class="form-control" name="category" ng-model="e.category"
+                    ng-init="e.category=''+e.category+''" required>
+              <option ng-repeat="cat in expenseCategories" ng-selected="cat.id == e.category"
+                      value="{{cat.id}}">{{cat.name | translate}}
+              </option>
+            </select>
           </div>
 
-          <div>
-            <div class="input-group"
-                 ng-class="{'has-error has-feedback': (forms.expensesForm.category.$invalid  && (forms.expensesForm.category.$dirty || forms.expensesForm.$submitted))}">
-              <span class="input-group-addon" id="basic-addon3"><em class="glyphicon glyphicon-info-sign"></em></span>
-              <select aria-describedby="basic-addon3" class="form-control" name="category" ng-model="expense.category"
-                      required>
-                <option value="" disabled>{{'category' | translate}}</option>
-                <option ng-repeat="cat in expenseCategories"
-                        value="{{cat.id}}">{{cat.name | translate}}
-                </option>
-              </select>
-            </div>
-            <div class="error-message"
-                 ng-if="forms.expensesForm.category.$error.required && (forms.expensesForm.category.$dirty || forms.expensesForm.$submitted)">
-              {{'categoryRequired' | translate}}
-            </div>
-          </div>
-
-          <div class="input-group">
+          <div class="input-group form-custom-padding">
             <span class="input-group-addon" id="basic-addon4"><em class="glyphicon glyphicon-book"></em></span>
-            <textarea aria-describedby="basic-addon4" class="form-control" rows="3"
-                      ng-model="expense.description"></textarea>
+            <textarea aria-describedby="basic-addon4" class="form-control" rows="2"
+                      ng-model="e.description"></textarea>
           </div>
 
           <div class="form-group">
             <div class="col-sm-12">
               <button class="btn btn-primary pull-left" type="submit">
                 <em class="glyphicon glyphicon-floppy-save"></em>
-                {{'submitExpense' | translate}}
+                {{'save' | translate}}
               </button>
             </div>
           </div>
         </form>
-
       </div>
-    </div>
+    </uib-accordion>
+
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <li>
+          <a href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">1</a>
+        </li>
+        <li>
+          <a href="#">2</a>
+        </li>
+        <li>
+          <a href="#">3</a>
+        </li>
+        <li>
+          <a href="#">4</a>
+        </li>
+        <li>
+          <a href="#">5</a>
+        </li>
+        <li>
+          <a href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="tab-pane container" id="new">
+    <br/>
+
+    <form class="form-horizontal" id="form" name="forms.expensesForm"
+          ng-submit="submitExpense()" novalidate>
+      <div>
+        <div class="input-group"
+             ng-class="{'has-error has-feedback': (forms.expensesForm.amount.$invalid  && (forms.expensesForm.amount.$dirty || forms.expensesForm.$submitted))}">
+          <span class="input-group-addon" id="basic-addon1"><em class="glyphicon glyphicon-euro"></em></span>
+          <input aria-describedby="basic-addon1" class="form-control" name="amount" ng-model="expense.amount"
+                 placeholder="{{'amount' | translate}}" type="number" required/>
+        </div>
+        <div class="error-message"
+             ng-if="forms.expensesForm.amount.$error.required && (forms.expensesForm.amount.$dirty || forms.expensesForm.$submitted)">
+          {{'amountRequired' | translate}}
+        </div>
+      </div>
+
+      <div class="input-group"
+           ng-class="{'has-error has-feedback': (forms.expensesForm.date.$invalid  && (forms.expensesForm.date.$dirty || forms.expensesForm.$submitted))}">
+          <span class="input-group-btn" id="basic-addon2">
+            <button type="button" class="btn btn-flat btn-date" ng-click="datePickerOpened = true;"><em
+                class="glyphicon glyphicon-calendar"></em>
+            </button>
+          </span>
+        <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="expense.date"
+               is-open="datePickerOpened" datepicker-options="dateOptions"
+               alt-input-formats="altInputFormats" ng-readonly="true" current-text="{{'today' | translate}}"
+               close-text="{{'close' | translate}}"
+               required/>
+      </div>
+
+      <div>
+        <div class="input-group"
+             ng-class="{'has-error has-feedback': (forms.expensesForm.category.$invalid  && (forms.expensesForm.category.$dirty || forms.expensesForm.$submitted))}">
+          <span class="input-group-addon" id="basic-addon3"><em class="glyphicon glyphicon-info-sign"></em></span>
+          <select aria-describedby="basic-addon3" class="form-control" name="category" ng-model="expense.category"
+                  required>
+            <option value="" disabled>{{'category' | translate}}</option>
+            <option ng-repeat="cat in expenseCategories"
+                    value="{{cat.id}}">{{cat.name | translate}}
+            </option>
+          </select>
+        </div>
+        <div class="error-message"
+             ng-if="forms.expensesForm.category.$error.required && (forms.expensesForm.category.$dirty || forms.expensesForm.$submitted)">
+          {{'categoryRequired' | translate}}
+        </div>
+      </div>
+
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon4"><em class="glyphicon glyphicon-book"></em></span>
+        <textarea aria-describedby="basic-addon4" class="form-control" rows="3"
+                  ng-model="expense.description"></textarea>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-12">
+          <button class="btn btn-primary pull-left" type="submit">
+            <em class="glyphicon glyphicon-floppy-save"></em>
+            {{'submitExpense' | translate}}
+          </button>
+        </div>
+      </div>
+    </form>
+
   </div>
 </div>
 

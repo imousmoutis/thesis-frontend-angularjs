@@ -618,4 +618,19 @@ body::-webkit-scrollbar-thumb {
   width: inherit !important;
 }
 
+.bs-callout {
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+  border-radius: 3px;
+}
+
+.bs-callout-warning {
+  border-left-color: #aa6708;
+}
+
+.form-custom-padding{
+  padding-bottom: 10px;
+}
 
