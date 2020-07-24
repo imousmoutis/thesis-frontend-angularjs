@@ -58,22 +58,7 @@
     </div>
 
     <div ng-if="expensesDates.length > 0">
-      <form class="text-center">
-        <label class="radio-inline">
-          <input type="radio" name="optradio" ng-model="selectedGraph" value="line">
-          {{'lineChart' | translate}}
-        </label>
-        <label class="radio-inline">
-          <input type="radio" name="optradio" ng-model="selectedGraph" value="bar">
-          {{'barChart' | translate}}
-        </label>
-      </form>
-
-      <canvas ng-if="selectedGraph == 'line'" id="line" class="chart chart-line" chart-data="expensesData"
-              chart-labels="expensesDates" chart-series="chartCategories" chart-options="options"
-              chart-dataset-override="datasetOverride">
-      </canvas>
-      <canvas ng-if="selectedGraph == 'bar'" id="base" class="chart-horizontal-bar" chart-data="expensesData"
+      <canvas id="base" class="chart-horizontal-bar" chart-data="expensesData"
               chart-labels="expensesDates" chart-series="chartCategories">
       </canvas>
     </div>

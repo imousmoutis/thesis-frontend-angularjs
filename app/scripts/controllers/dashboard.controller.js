@@ -30,8 +30,6 @@ app.controller('DashboardController',
 
         $scope.expensesData = [];
 
-        $scope.selectedGraph = 'line';
-
         $scope.datasetOverride = [{yAxisID: 'y-axis-1'}];
         $scope.options = {
           scales: {
