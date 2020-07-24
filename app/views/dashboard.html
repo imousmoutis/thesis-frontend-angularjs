@@ -88,49 +88,51 @@
     <uib-accordion close-others="true">
       <div uib-accordion-group class="panel-default" ng-repeat="e in totalExpensesData" is-open="group.open">
         <uib-accordion-heading>
-          {{e.amount}}
-          <i class="glyphicon glyphicon-eur"></i>
-          {{'for' | translate}}
-          {{getTranslatedCategory(e.category)}} ({{e.date}})
-          <em class="pull-right glyphicon"
-             ng-class="{'glyphicon-chevron-down': group.open, 'glyphicon-chevron-right': !group.open}"></em>
+          <div ng-click="alert();">
+            {{e.amount}}
+            <i class="glyphicon glyphicon-eur"></i>
+            {{'for' | translate}}
+            {{getTranslatedCategory(e.category)}} ({{e.date}})
+            <em class="pull-right glyphicon"
+                ng-class="{'glyphicon-chevron-down': group.open, 'glyphicon-chevron-right': !group.open}"></em>
+          </div>
         </uib-accordion-heading>
 
-        <form class="form-horizontal" id="tessera" name="forms.expensesForm1" ng-submit="updateExpense(e)" novalidate>
+        <form class="form-horizontal">
           <div class="form-custom-padding">
-            <div class="input-group"
-                 ng-class="{'has-error has-feedback': (forms.expensesForm1.amount.$invalid  && (forms.expensesForm1.amount.$dirty || forms.expensesForm1.$submitted))}">
-              <span class="input-group-addon" id="basic-addon1"><em class="glyphicon glyphicon-euro"></em></span>
-              <input aria-describedby="basic-addon1" class="form-control" name="amount" ng-model="e.amount"
-                     placeholder="{{'amount' | translate}}" type="number" required/>
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon01"><em class="glyphicon glyphicon-euro"></em></span>
+              <input aria-describedby="basic-addon01" class="form-control" name="amount" ng-model="e.amount"
+                     placeholder="{{'amount' | translate}}" type="number" readonly/>
             </div>
-            <div class="error-message"
-                 ng-if="forms.expensesForm1.amount.$error.required && (forms.expensesForm.amount.$dirty || forms.expensesForm.$submitted)">
-              {{'amountRequired' | translate}}
+          </div>
+
+          <div class="form-custom-padding">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon02"><em class="glyphicon glyphicon-calendar"></em></span>
+              <input aria-describedby="basic-addon02" class="form-control" name="date" ng-model="e.date"
+                     placeholder="{{'date' | translate}}" type="text" readonly/>
             </div>
           </div>
 
           <div class="input-group form-custom-padding">
-            <span class="input-group-addon" id="basic-addon3"><em class="glyphicon glyphicon-info-sign"></em></span>
-            <select aria-describedby="basic-addon3" class="form-control" name="category" ng-model="e.category"
-                    ng-init="e.category=''+e.category+''" required>
-              <option ng-repeat="cat in expenseCategories" ng-selected="cat.id == e.category"
-                      value="{{cat.id}}">{{cat.name | translate}}
-              </option>
-            </select>
+            <span class="input-group-addon" id="basic-addon03"><em class="glyphicon glyphicon-info-sign"></em></span>
+            <input aria-describedby="basic-addon03" class="form-control" name="category"
+                   ng-model="getTranslatedCategory(e.category)" ng-model-options=" {getterSetter: true }"
+                   placeholder="{{'category' | translate}}" type="text" readonly/>
           </div>
 
           <div class="input-group form-custom-padding">
-            <span class="input-group-addon" id="basic-addon4"><em class="glyphicon glyphicon-book"></em></span>
-            <textarea aria-describedby="basic-addon4" class="form-control" rows="2"
-                      ng-model="e.description"></textarea>
+            <span class="input-group-addon" id="basic-addon04"><em class="glyphicon glyphicon-book"></em></span>
+            <textarea aria-describedby="basic-addon04" class="form-control" rows="2"
+                      ng-model="e.description" readonly></textarea>
           </div>
 
           <div class="form-group">
             <div class="col-sm-12">
-              <button class="btn btn-primary pull-left" type="submit">
-                <em class="glyphicon glyphicon-floppy-save"></em>
-                {{'save' | translate}}
+              <button class="btn btn-danger pull-left" type="button" ng-click="deleteExpense(e.id)">
+                <em class="glyphicon glyphicon-trash"></em>
+                {{'delete' | translate}}
               </button>
             </div>
           </div>
@@ -138,30 +140,19 @@
       </div>
     </uib-accordion>
 
-    <nav aria-label="Page navigation">
+    <nav aria-label="Page navigation" ng-show="totalExpensesSize > 0">
       <ul class="pagination">
-        <li>
-          <a href="#" aria-label="Previous">
+        <li ng-click="reloadUserExpenses(expensesPaginatedPages[0])">
+          <a href="" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-        <li>
-          <a href="#">1</a>
+        <li ng-repeat="index in expensesPaginatedPages" ng-class="{'active': selectedPage == index}"
+            ng-click="reloadUserExpenses(index)">
+          <a href="">{{index+1}}</a>
         </li>
-        <li>
-          <a href="#">2</a>
-        </li>
-        <li>
-          <a href="#">3</a>
-        </li>
-        <li>
-          <a href="#">4</a>
-        </li>
-        <li>
-          <a href="#">5</a>
-        </li>
-        <li>
-          <a href="#" aria-label="Next">
+        <li ng-click="reloadUserExpenses(expensesPaginatedPages[expensesPaginatedPages.length - 1])">
+          <a href="" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>

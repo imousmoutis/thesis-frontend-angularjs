@@ -94,21 +94,33 @@ app.controller('DashboardController',
         };
       }
 
+      $scope.reloadUserExpenses = function (page) {
+        $scope.selectedPage = page;
+        $scope.loadUserExpenses();
+      }
+
       $scope.loadUserExpenses = function () {
         ExpenseService.getUserExpenses({page: $scope.selectedPage, size: $scope.pageSize})
         .then(function (response) {
           $scope.totalExpensesSize = response.data.size;
           $scope.totalExpensesData = response.data.results;
-          generateExpensesPagination();
+
+          if ($scope.totalExpensesSize > 0){
+            generateExpensesPagination();
+          }
         });
       };
 
       function generateExpensesPagination() {
         $scope.expensesPaginatedPages = [];
         for (var i = 0; i < Math.ceil($scope.totalExpensesSize / $scope.pageSize); i++) {
-          $scope.expensesPaginatedPages.push(i + 1);
+          $scope.expensesPaginatedPages.push(i);
         }
-        console.log($scope.expensesPaginatedPages);
+
+        if ($scope.expensesPaginatedPages.indexOf($scope.selectedPage) < 0) {
+          $scope.selectedPage = $scope.expensesPaginatedPages[$scope.expensesPaginatedPages.length - 1];
+          $scope.loadUserExpenses();
+        }
       }
 
       ExpenseService.getExpenseCategories()
@@ -140,6 +152,7 @@ app.controller('DashboardController',
             $scope.forms.expensesForm.$setPristine();
             $scope.loadTotalExpenses();
             initNewExpense();
+            $scope.loadUserExpenses();
             Notification.success({message: $filter('translate')('newExpenseSuccessful')});
           });
         }
@@ -149,9 +162,15 @@ app.controller('DashboardController',
         return $filter('translate')($filter('filter')($scope.expenseCategories, {id: id})[0].name);
       };
 
-      $scope.updateExpense = function (expense) {
-        console.log(expense);
-      };
+      $scope.deleteExpense = function (expenseId) {
+        ExpenseService.deleteExpense(expenseId)
+        .then(function (response) {
+          Notification.success({message: $filter('translate')('deleteExpenseSuccessful')});
+          $scope.loadTotalExpenses();
+          $scope.loadUserExpenses();
+        }, function (error) {
+        });
+      }
 
       initVariables();
 
