@@ -31,18 +31,6 @@ app.controller('DashboardController',
         $scope.expensesData = [];
 
         $scope.datasetOverride = [{yAxisID: 'y-axis-1'}];
-        $scope.options = {
-          scales: {
-            yAxes: [
-              {
-                id: 'y-axis-1',
-                type: 'linear',
-                display: true,
-                position: 'left'
-              }
-            ]
-          }
-        };
 
         $scope.selectedPage = 0;
         $scope.pageSize = 15;

@@ -59,7 +59,7 @@
 
     <div ng-if="expensesDates.length > 0">
       <canvas id="base" class="chart-horizontal-bar" chart-data="expensesData"
-              chart-labels="expensesDates" chart-series="chartCategories">
+              chart-labels="expensesDates" chart-series="chartCategories" chart-options="{legend: {display: true}}">
       </canvas>
     </div>
   </div>
