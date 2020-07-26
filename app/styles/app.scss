@@ -20,7 +20,8 @@ html {
 }
 
 body {
-  font-family: system-ui;
+  font-family: 'Inconsolata', Helvetica, sans-serif;
+  font-size: 1.5rem;
 
   > .container {
     padding: 80px 15px 0;
@@ -482,93 +483,11 @@ body::-webkit-scrollbar-thumb {
   }
 }
 
-.container-404 {
-  background-color: $bgColor;
-  color: $booFaceColor;
-  position: relative;
-  height: 100vh;
-  text-align: center;
-  font-size: $jaggedDistance / 2;
-
-  h1 {
-    font-size: $jaggedDistance;
-    margin-top: $jaggedDistance;
-  }
-}
-
-.boo-wrapper {
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding-top: $jaggedDistance * 2;
-  padding-bottom: $jaggedDistance * 2;
-}
-
-.boo {
-  width: $booSize;
-  height: $booSize + ($booSize * .15);
-  background-color: $booBg;
-  margin-left: auto;
-  margin-right: auto;
-  border: (($jaggedDistance / 1.65)  - ($jaggedDistance /2)) solid $booFaceColor;
-  border-bottom: 0;
-  overflow: hidden;
-  border-radius: ($booSize / 2) ($booSize / 2) 0 0;
-  box-shadow: -($jaggedDistance / 2) 0 0 2px rgba($booShadow, .5) inset;
-  @include border-bottom-jagged($jaggedDistance, $bgColor);
-  animation: floating 3s ease-in-out infinite;
-
-  .face {
-    width: $booFaceSize;
-    height: $jaggedDistance / 10;
-    border-radius: 5px;
-    background-color: $booFaceColor;
-    position: absolute;
-    left: 50%;
-    bottom: $jaggedDistance + $booFaceSize;
-    transform: translateX(-50%);
-
-    &::before,
-    &::after {
-      content: '';
-      display: block;
-      width: $booFaceSize / 4;
-      height: $booFaceSize / 4;
-      background-color: $booFaceColor;
-      border-radius: 50%;
-      position: absolute;
-      bottom: $jaggedDistance + ($booFaceSize / 3);
-    }
-
-    &::before {
-      left: -$booFaceSize;
-    }
-
-    &::after {
-      right: -$booFaceSize;
-    }
-  }
-}
-
-.shadow {
-  width: $booSize - $jaggedDistance;
-  height: $jaggedDistance / 2;
-  background-color: rgba($booShadow, .75);
-  margin-top: $jaggedDistance * 1.25;
-  margin-right: auto;
-  margin-left: auto;
-  border-radius: 50%;
-  animation: floatingShadow 3s ease-in-out infinite;
-}
-
 .input-group-btn {
   background-color: #eee;
   border: 1px solid #ccc;
   border-right: 0;
 }
-
 
 .uib-datepicker-popup {
   z-index: 9999;
@@ -582,7 +501,6 @@ body::-webkit-scrollbar-thumb {
     border: 0;
   }
 }
-
 
 .input-group-btn {
   border-radius: 4px 0 0 4px;
@@ -630,7 +548,99 @@ body::-webkit-scrollbar-thumb {
   border-left-color: #aa6708;
 }
 
-.form-custom-padding{
+.form-custom-padding {
   padding-bottom: 10px;
 }
 
+.error-page {
+  box-sizing: border-box;
+  height: 100%;
+  background-color: #000000;
+  background-image: radial-gradient(#11581E, #041607), url("https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: rgba(128, 255, 128, 0.8);
+  text-shadow:
+      0 0 1ex rgba(51, 255, 51, 1),
+      0 0 2px rgba(255, 255, 255, 0.8);
+}
+
+
+.noise {
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+  opacity: .02;
+}
+
+.overlay {
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background:
+      repeating-linear-gradient(
+              180deg,
+              rgba(0, 0, 0, 0) 0,
+              rgba(0, 0, 0, 0.3) 50%,
+              rgba(0, 0, 0, 0) 100%);
+  background-size: auto 4px;
+  z-index: 1;
+}
+
+.overlay::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+          0deg,
+          transparent 0%,
+          rgba(32, 128, 32, 0.2) 2%,
+          rgba(32, 128, 32, 0.8) 3%,
+          rgba(32, 128, 32, 0.2) 3%,
+          transparent 100%);
+  background-repeat: no-repeat;
+  animation: scan 7.5s linear 0s infinite;
+}
+
+@keyframes scan {
+  0%        { background-position: 0 -100vh; }
+  35%, 100% { background-position: 0 100vh; }
+}
+
+.terminal {
+  box-sizing: inherit;
+  position: absolute;
+  height: 100%;
+  width: 1000px;
+  max-width: 100%;
+  padding: 4rem;
+  text-transform: uppercase;
+}
+
+.output {
+  color: rgba(128, 255, 128, 0.8);
+  text-shadow:
+      0 0 1px rgba(51, 255, 51, 0.4),
+      0 0 2px rgba(255, 255, 255, 0.8);
+}
+
+.output::before {
+  content: "> ";
+}
+
+.errorcode {
+  color: white;
+}
